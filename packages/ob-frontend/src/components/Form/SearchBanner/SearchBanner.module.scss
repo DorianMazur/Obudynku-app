@@ -1,0 +1,21 @@
+.ob__banner {
+  background: url("/banner.jpg") left;
+  background-size: cover;
+  border-radius: 24px;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  word-break: break-word;
+  margin-bottom: 32px;
+  &_input {
+    position: absolute;
+    bottom: -28px;
+    box-shadow: 0px 3px 4px rgba(153, 155, 168, 0.25);
+    border-radius: 13px;
+    overflow: hidden;
+  }
+}

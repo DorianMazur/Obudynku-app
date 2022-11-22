@@ -1,0 +1,21 @@
+name: Test
+on: [push]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository code.
+              uses: actions/checkout@v2
+            - name: Install Node.js.
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16.13'
+            - name: Cache Yarn cache.
+              uses: c-hive/gha-yarn-cache@v2
+            - name: Install project dependencies.
+              run: yarn --prefer-offline  --frozen-lockfile
+            - name: Run Tests.
+              env:
+                  ENVIRONMENT: test
+              run: echo "OK"

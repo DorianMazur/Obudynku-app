@@ -1,0 +1,14 @@
+.ob__signupEmail {
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  height: calc(100vh - 90px);
+  & > form {
+    width: 100%;
+  }
+  &_subtitle {
+    color: #8083a3;
+    text-align: center;
+  }
+}

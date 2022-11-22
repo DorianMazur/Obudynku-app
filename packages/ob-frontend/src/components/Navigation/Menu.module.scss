@@ -1,0 +1,13 @@
+.ob__menu {
+  height: 90px;
+  padding: 22px 60px;
+  margin-bottom: 16px;
+  @media screen and (max-width: 1200px) {
+    padding: 22px 0px;
+  }
+  &_item {
+    &--active {
+      color: #000000 !important;
+    }
+  }
+}

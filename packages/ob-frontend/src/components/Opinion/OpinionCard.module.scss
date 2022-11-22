@@ -1,0 +1,12 @@
+.ob__opinionCard {
+  padding: 16px;
+  &_title {
+    cursor: pointer;
+    &:hover {
+      color: #00d066;
+    }
+  }
+  &_rate{
+    width: 100%;
+  }
+}

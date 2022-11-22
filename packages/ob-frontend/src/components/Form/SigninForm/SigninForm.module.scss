@@ -1,0 +1,20 @@
+.ob__signin {
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  height: calc(100vh - 90px);
+  & > form {
+    width: 100%;
+    text-align: center;
+  }
+  &_subtitle {
+    color: #8083a3;
+    text-align: center;
+  }
+  &_input {
+    border: 1px solid rgba(228, 230, 232, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
