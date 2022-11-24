@@ -25,7 +25,7 @@ jobs:
               name: Build and publish docker image
               with:
                 github-push-secret: ${{secrets.GITHUB_TOKEN}}
-                docker-image-tag: ${GITHUB_SHA::7}
+                docker-image-tag: ${{GITHUB_SHA::7}}
                 docker-image-name: ob-frontend
                 dockerfile-path: ./packages/ob-frontend/Dockerfile
                 build-context: ./
