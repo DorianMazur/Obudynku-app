@@ -28,6 +28,7 @@ jobs:
               run: echo "OK"
   
     build:
+        needs: test
         runs-on: ubuntu-latest
         steps:
             - name: Check out repository code.
@@ -61,12 +62,13 @@ jobs:
                 context: .
                 file: ./packages/ob-frontend/Dockerfile
                 tags: |
-                  ghcr.io/username/package:latest
-                  ghcr.io/username/package:${{ github.sha }}
+                  ghcr.io/obudynku/ob-frontend:latest
+                  ghcr.io/obudynku/ob-frontend:${{ github.sha }}
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
   
     deploy:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Set the Kubernetes context
