@@ -9,3 +9,6 @@ The opinions that can be found in this application are especially useful for peo
 
 ## Technical stack
 (to do)
+
+## License
+Licensed under the [GPLv3 License](https://github.com/Obudynku/Obudynku-app/LICENSE)
