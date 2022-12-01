@@ -27,7 +27,7 @@ export class BuildingService {
     /*if (!building.image) {
       const writeStream = createWriteStream(`./${building.id}.jpg`);
       const response = await this.httpService.axiosRef({
-        url: `https://maps.googleapis.com/maps/api/streetview?size=1000x500&source=outdoor&location=${building.lat},${building.lon}&pitch=0&key=AIzaSyAckrG5hDcdfZZFLQoyzNmH7phKpVOm-sA`,
+        url: ``,
         method: 'GET',
         responseType: 'stream',
       });

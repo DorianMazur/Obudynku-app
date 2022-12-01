@@ -18,6 +18,6 @@ ENV NODE_ENV=production
 RUN apk update && apk add --no-cache libstdc++ libgcc
 
 # copy prebuilt binary from previous step
-COPY --from=build /app/packages/ob-backend/main /app/main
+COPY --from=builder /app/packages/ob-backend/main /app/main
 EXPOSE 8080
 CMD ["/app/main"]
