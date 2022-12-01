@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    uri: api.obudynku.pl
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      uri: api.obudynku.pl
+  template:
+    metadata:
+      labels:
+        uri: api.obudynku.pl
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/obudynku/ob-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+      dnsPolicy: ClusterFirst

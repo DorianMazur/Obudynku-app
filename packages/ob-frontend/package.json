@@ -2,6 +2,7 @@
   "name": "ob-frontend",
   "version": "0.0.0",
   "author": "Dorian Mazur <mazur.dorian15@gmail.com>",
+  "license": "GPL-3.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

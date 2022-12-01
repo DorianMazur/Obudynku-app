@@ -1,6 +1,9 @@
-name: Production
+name: Frontend
 on:
   push:
+    paths:
+      - packages/ob-frontend/**
+      - packages/ob-kube/frontend/**
     branches:
       - main
 
