@@ -3,9 +3,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN yarn install --frozen-lockfile
-ARG NODE_ENV=devolpement
-RUN echo ${NODE_ENV}
-RUN NODE_ENV=${NODE_ENV} yarn build:frontend
+RUN yarn build:frontend
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
