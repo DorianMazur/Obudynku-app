@@ -5,7 +5,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "dev": "./env.sh next dev",
-    "build": "./env.sh next build",
+    "build": "next build",
     "lint": "next lint"
   },
   "dependencies": {
