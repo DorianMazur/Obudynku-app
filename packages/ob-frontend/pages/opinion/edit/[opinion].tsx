@@ -1,16 +1,16 @@
-import { Layout } from '@/components/Layout/Layout';
-import { useContext, useState } from 'react';
-import { CircularProgress, LinearProgress } from '@mui/material';
-import { NewOpinionRatesForm } from '@/components/Form/NewOpinionRatesForm/NewOpinionsRatesForm';
-import { NewOpinionSummaryForm } from '@/components/Form/NewOpinionSummaryForm/NewOpinionSummaryForm';
-import { useRouter } from 'next/router';
-import { SnackbarContext } from '@/context/SnackbarContext';
-import { useOpinion } from '@/hooks/useOpinions';
-import { useMutation, useQuery } from 'react-query';
+import { Layout } from "@/components/Layout/Layout";
+import { useContext, useState } from "react";
+import { CircularProgress, LinearProgress } from "@mui/material";
+import { NewOpinionRatesForm } from "@/components/Form/NewOpinionRatesForm/NewOpinionsRatesForm";
+import { NewOpinionSummaryForm } from "@/components/Form/NewOpinionSummaryForm/NewOpinionSummaryForm";
+import { useRouter } from "next/router";
+import { SnackbarContext } from "@/context/SnackbarContext";
+import { useOpinion } from "@/hooks/useOpinions";
+import { useMutation, useQuery } from "react-query";
 
 enum OpinionSteps {
-  Rates = 'OPINION_RATES',
-  Summary = 'OPINION_SUMMARY',
+  Rates = "OPINION_RATES",
+  Summary = "OPINION_SUMMARY"
 }
 
 const NewOpinion = () => {
@@ -19,9 +19,9 @@ const NewOpinion = () => {
   const [step, setStep] = useState(OpinionSteps.Rates);
   const snackbar = useContext(SnackbarContext);
   const { getMyOpinion, editOpinion } = useOpinion();
-  const { data: myOpinion } = useQuery('getMyOpinion', () => getMyOpinion(id), {
+  const { data: myOpinion } = useQuery("getMyOpinion", () => getMyOpinion(id), {
     enabled: !!id,
-    onSuccess: (data) => {
+    onSuccess: data => {
       setOpinions(
         Object.keys(data.opinions || {}).reduce((prev, curr) => {
           /* @ts-ignore */
@@ -30,18 +30,18 @@ const NewOpinion = () => {
         }, {})
       );
       setSummary(data.advice);
-    },
+    }
   });
-  const { mutate, isLoading } = useMutation('getLocations', editOpinion, {
-    onSuccess: (data) => {
+  const { mutate, isLoading } = useMutation("getLocations", editOpinion, {
+    onSuccess: data => {
       if (data) {
-        router.push('/profile');
+        router.push("/profile");
         snackbar.showSnackbar({
-          message: 'Pomyślnie zaktulizowano opinię',
-          severity: 'success',
+          message: "Pomyślnie zaktulizowano opinię",
+          severity: "success"
         });
       }
-    },
+    }
   });
 
   const [opinions, setOpinions] = useState<any | undefined>(undefined);
@@ -93,7 +93,7 @@ const NewOpinion = () => {
                         /* @ts-ignore */
                         return [o_key, o_val.desc];
                       })
-                    ),
+                    )
                   })
                 }
               />
@@ -105,11 +105,11 @@ const NewOpinion = () => {
         variant="determinate"
         value={progressByStep(step)}
         sx={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           zIndex: 999,
-          width: '100vw',
-          height: 6,
+          width: "100vw",
+          height: 6
         }}
       />
     </>

@@ -1,34 +1,34 @@
-import { Stack, TextField, Button, Divider, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import styles from './SignupEmailForm.module.scss';
-import { useMutation } from 'react-query';
-import { AxiosError } from 'axios';
-import { requestEmailCode, useUser } from '@/hooks/useUser';
+import { Stack, TextField, Button, Divider, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useRouter } from "next/router";
+import styles from "./SignupEmailForm.module.scss";
+import { useMutation } from "react-query";
+import { AxiosError } from "axios";
+import { requestEmailCode, useUser } from "@/hooks/useUser";
 
 export interface SignupEmailFormProps {
   onSuccess(): void;
 }
 
 export const SignupEmailForm: React.FC<SignupEmailFormProps> = ({
-  onSuccess,
+  onSuccess
 }) => {
   const router = useRouter();
   const { setRegistrationEmail } = useUser();
-  const { mutate } = useMutation('requestEmailCode', requestEmailCode, {
-    onSuccess: (data) => {
+  const { mutate } = useMutation("requestEmailCode", requestEmailCode, {
+    onSuccess: data => {
       setRegistrationEmail(data.email);
       onSuccess();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       formik.setSubmitting(false);
       formik.setErrors({ email: error?.response?.data?.message });
-    },
+    }
   });
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: ""
     },
     onSubmit: ({ email }, { setSubmitting }) => {
       setSubmitting(true);
@@ -37,9 +37,9 @@ export const SignupEmailForm: React.FC<SignupEmailFormProps> = ({
     validationSchema: yup.object({
       email: yup
         .string()
-        .email('Wpisz poprawny adres email')
-        .required('Adres email jest wymagany'),
-    }),
+        .email("Wpisz poprawny adres email")
+        .required("Adres email jest wymagany")
+    })
   });
 
   return (
@@ -63,10 +63,10 @@ export const SignupEmailForm: React.FC<SignupEmailFormProps> = ({
             name="email"
             fullWidth
             sx={{
-              '.MuiFilledInput-root': {
-                border: '1px solid rgba(228, 230, 232, 0.6)',
-                overflow: 'hidden',
-              },
+              ".MuiFilledInput-root": {
+                border: "1px solid rgba(228, 230, 232, 0.6)",
+                overflow: "hidden"
+              }
             }}
             value={formik.values.email}
             onChange={formik.handleChange}
@@ -90,7 +90,7 @@ export const SignupEmailForm: React.FC<SignupEmailFormProps> = ({
         variant="text"
         size="large"
         fullWidth
-        onClick={() => router.push('/signin')}
+        onClick={() => router.push("/signin")}
       >
         Zaloguj się
       </Button>

@@ -1,6 +1,6 @@
-import { Layout } from '@/components/Layout/Layout';
-import { SnackbarContext } from '@/context/SnackbarContext';
-import { useUser } from '@/hooks/useUser';
+import { Layout } from "@/components/Layout/Layout";
+import { SnackbarContext } from "@/context/SnackbarContext";
+import { useUser } from "@/hooks/useUser";
 import {
   Avatar,
   Button,
@@ -10,28 +10,28 @@ import {
   Chip,
   IconButton,
   Dialog,
-  Box,
-} from '@mui/material';
-import { useRouter } from 'next/router';
-import { useMutation, useQuery } from 'react-query';
-import { useContext, useState } from 'react';
-import { useOpinion } from '@/hooks/useOpinions';
-import { OpinionCard } from '@/components/Opinion/OpinionCard';
-import { avgRateForOpinion } from '@/utils/opinions';
-import { Delete, Edit } from '@mui/icons-material';
+  Box
+} from "@mui/material";
+import { useRouter } from "next/router";
+import { useMutation, useQuery } from "react-query";
+import { useContext, useState } from "react";
+import { useOpinion } from "@/hooks/useOpinions";
+import { OpinionCard } from "@/components/Opinion/OpinionCard";
+import { avgRateForOpinion } from "@/utils/opinions";
+import { Delete, Edit } from "@mui/icons-material";
 
 export const Profile = () => {
   const [deleteID, setDeleteID] = useState<null | string>(null);
   const router = useRouter();
   const { setUser, user } = useUser();
   const { getMyOpinions, deleteOpinion } = useOpinion();
-  const { data, refetch } = useQuery('myOpinions', () => getMyOpinions());
-  const { mutate } = useMutation('deleteOpinion', deleteOpinion, {
-    onSuccess: (data) => {
+  const { data, refetch } = useQuery("myOpinions", () => getMyOpinions());
+  const { mutate } = useMutation("deleteOpinion", deleteOpinion, {
+    onSuccess: data => {
       if (data) {
         refetch();
       }
-    },
+    }
   });
   const snackbar = useContext(SnackbarContext);
 
@@ -41,7 +41,7 @@ export const Profile = () => {
         <Grid item xs={12} md={4}>
           <Stack
             spacing={2}
-            sx={{ maxWidth: 300, margin: '0 auto' }}
+            sx={{ maxWidth: 300, margin: "0 auto" }}
             justifyContent="center"
             alignItems="center"
           >
@@ -57,11 +57,11 @@ export const Profile = () => {
               size="large"
               fullWidth
               onClick={() => {
-                router.replace('/');
+                router.replace("/");
                 setUser(undefined);
                 snackbar.showSnackbar({
-                  message: 'Pomyślnie wylogowano',
-                  severity: 'success',
+                  message: "Pomyślnie wylogowano",
+                  severity: "success"
                 });
               }}
             >
@@ -80,7 +80,7 @@ export const Profile = () => {
           </Typography>
           <Stack spacing={2}>
             {data?.length ? (
-              data.map((opinion) => (
+              data.map(opinion => (
                 <OpinionCard
                   actions={
                     <>
@@ -104,13 +104,13 @@ export const Profile = () => {
                   badge={
                     <Chip
                       label={
-                        opinion.status === 'APPROVED'
-                          ? 'Zatwierdzone'
-                          : 'Oczekuje na zatwierdzenie'
+                        opinion.status === "APPROVED"
+                          ? "Zatwierdzone"
+                          : "Oczekuje na zatwierdzenie"
                       }
                       size="small"
                       color={
-                        opinion.status === 'APPROVED' ? 'primary' : undefined
+                        opinion.status === "APPROVED" ? "primary" : undefined
                       }
                     />
                   }

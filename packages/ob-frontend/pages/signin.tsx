@@ -1,8 +1,8 @@
-import { Layout } from '@/components/Layout/Layout';
-import { useRouter } from 'next/router';
-import { SigninForm } from '@/components/Form/SigninForm/SigninForm';
-import { useContext } from 'react';
-import { SnackbarContext } from '@/context/SnackbarContext';
+import { Layout } from "@/components/Layout/Layout";
+import { useRouter } from "next/router";
+import { SigninForm } from "@/components/Form/SigninForm/SigninForm";
+import { useContext } from "react";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const SignIn = () => {
   const router = useRouter();
@@ -11,10 +11,10 @@ const SignIn = () => {
     <Layout>
       <SigninForm
         onSuccess={() => {
-          router.push('/');
+          router.push("/");
           snackbar.showSnackbar({
-            message: 'Pomyślnie zalogowano',
-            severity: 'success',
+            message: "Pomyślnie zalogowano",
+            severity: "success"
           });
         }}
       />

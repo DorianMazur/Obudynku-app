@@ -1,15 +1,15 @@
-import { Layout } from '@/components/Layout/Layout';
-import { useContext, useState } from 'react';
-import { SignupEmailForm } from '@/components/Form/SignupEmailForm/SignupEmailForm';
-import { SignupCodeForm } from '@/components/Form/SignupCodeForm/SignupCodeForm';
-import { SignupPasswordForm } from '@/components/Form/SignupPasswordForm/SignupPasswordForm';
-import { useRouter } from 'next/router';
-import { SnackbarContext } from '@/context/SnackbarContext';
+import { Layout } from "@/components/Layout/Layout";
+import { useContext, useState } from "react";
+import { SignupEmailForm } from "@/components/Form/SignupEmailForm/SignupEmailForm";
+import { SignupCodeForm } from "@/components/Form/SignupCodeForm/SignupCodeForm";
+import { SignupPasswordForm } from "@/components/Form/SignupPasswordForm/SignupPasswordForm";
+import { useRouter } from "next/router";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 enum SignUpSteps {
-  Email = 'EMAIL_SIGNUP_STEP',
-  Code = 'CODE_SIGNUP_STEP',
-  Password = 'PASSWORD_SINGUP_STEP',
+  Email = "EMAIL_SIGNUP_STEP",
+  Code = "CODE_SIGNUP_STEP",
+  Password = "PASSWORD_SINGUP_STEP"
 }
 
 const SignUp = () => {
@@ -28,10 +28,10 @@ const SignUp = () => {
       {step === SignUpSteps.Password && (
         <SignupPasswordForm
           onSuccess={() => {
-            router.push('/');
+            router.push("/");
             snackbar.showSnackbar({
-              message: 'Pomyślnie zarejestrowano',
-              severity: 'success',
+              message: "Pomyślnie zarejestrowano",
+              severity: "success"
             });
           }}
         />

@@ -1,33 +1,33 @@
-import { Stack, TextField, Button, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import { useMutation } from 'react-query';
-import { AxiosError } from 'axios';
-import { useUser } from '@/hooks/useUser';
-import * as yup from 'yup';
-import styles from './SignupPasswordForm.module.scss';
+import { Stack, TextField, Button, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import { useMutation } from "react-query";
+import { AxiosError } from "axios";
+import { useUser } from "@/hooks/useUser";
+import * as yup from "yup";
+import styles from "./SignupPasswordForm.module.scss";
 
 export interface SignupPasswordFormProps {
   onSuccess(): void;
 }
 
 export const SignupPasswordForm: React.FC<SignupPasswordFormProps> = ({
-  onSuccess,
+  onSuccess
 }) => {
   const { setPassword, setUser } = useUser();
-  const { mutate } = useMutation('setPassword', setPassword, {
-    onSuccess: (data) => {
+  const { mutate } = useMutation("setPassword", setPassword, {
+    onSuccess: data => {
       setUser(data);
       onSuccess();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       formik.setSubmitting(false);
       formik.setErrors({ password: error?.response?.data?.message });
-    },
+    }
   });
   const formik = useFormik({
     initialValues: {
-      password: '',
-      passwordConfirmation: '',
+      password: "",
+      passwordConfirmation: ""
     },
     onSubmit: ({ password }, { setSubmitting }) => {
       mutate({ password });
@@ -36,12 +36,12 @@ export const SignupPasswordForm: React.FC<SignupPasswordFormProps> = ({
     validationSchema: yup.object({
       password: yup
         .string()
-        .required('Wpisz hasło')
-        .min(6, 'Hasło musi mieć minimum 6 znaków'),
+        .required("Wpisz hasło")
+        .min(6, "Hasło musi mieć minimum 6 znaków"),
       passwordConfirmation: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Hasła muszą być takie same'),
-    }),
+        .oneOf([yup.ref("password"), null], "Hasła muszą być takie same")
+    })
   });
 
   return (
@@ -66,10 +66,10 @@ export const SignupPasswordForm: React.FC<SignupPasswordFormProps> = ({
             type="password"
             fullWidth
             sx={{
-              '.MuiFilledInput-root': {
-                border: '1px solid rgba(228, 230, 232, 0.6)',
-                overflow: 'hidden',
-              },
+              ".MuiFilledInput-root": {
+                border: "1px solid rgba(228, 230, 232, 0.6)",
+                overflow: "hidden"
+              }
             }}
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -84,10 +84,10 @@ export const SignupPasswordForm: React.FC<SignupPasswordFormProps> = ({
             type="password"
             fullWidth
             sx={{
-              '.MuiFilledInput-root': {
-                border: '1px solid rgba(228, 230, 232, 0.6)',
-                overflow: 'hidden',
-              },
+              ".MuiFilledInput-root": {
+                border: "1px solid rgba(228, 230, 232, 0.6)",
+                overflow: "hidden"
+              }
             }}
             value={formik.values.passwordConfirmation}
             onChange={formik.handleChange}

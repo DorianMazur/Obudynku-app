@@ -1,13 +1,13 @@
-import dynamic from 'next/dynamic';
-import styles from './NewOpinionLocationForm.module.scss';
-import { Button, CircularProgress, Typography } from '@mui/material';
-import { OpenStreetMapAddress } from '@/types/Location';
-import { getLocation } from '@/hooks/useLocation';
-import { useMutation } from 'react-query';
-import { useState } from 'react';
-import { useOpinion } from '@/hooks/useOpinions';
+import dynamic from "next/dynamic";
+import styles from "./NewOpinionLocationForm.module.scss";
+import { Button, CircularProgress, Typography } from "@mui/material";
+import { OpenStreetMapAddress } from "@/types/Location";
+import { getLocation } from "@/hooks/useLocation";
+import { useMutation } from "react-query";
+import { useState } from "react";
+import { useOpinion } from "@/hooks/useOpinions";
 
-const Map = dynamic(() => import('@/components/Map/Map'), { ssr: false });
+const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export interface NewOpinionLocationFormProps {
   onNext(): void;
@@ -18,12 +18,12 @@ export interface NewOpinionLocationFormProps {
 export const NewOpinionLocationForm: React.FC<NewOpinionLocationFormProps> = ({
   onNext,
   location,
-  setLocation,
+  setLocation
 }) => {
-  const { mutate, isLoading } = useMutation('getLocations', getLocation, {
-    onSuccess: (data) => {
+  const { mutate, isLoading } = useMutation("getLocations", getLocation, {
+    onSuccess: data => {
       setLocation(data);
-    },
+    }
   });
   return (
     <>
@@ -57,7 +57,7 @@ export const NewOpinionLocationForm: React.FC<NewOpinionLocationFormProps> = ({
           mt="16px"
         >
           {location === null
-            ? 'Wybierz inny punkt na mapie'
+            ? "Wybierz inny punkt na mapie"
             : location?.display_name}
         </Typography>
       )}

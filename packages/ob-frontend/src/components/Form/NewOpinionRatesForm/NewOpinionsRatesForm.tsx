@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import {
   Button,
   Grid,
@@ -8,12 +8,12 @@ import {
   Stack,
   Tabs,
   Input,
-  Tab,
-} from '@mui/material';
-import { useState } from 'react';
-import { OpinionIndexes } from '@/types/Opinion';
-import { RATES_KEYS } from '@/const/rates';
-import { ErrorOutlined } from '@mui/icons-material';
+  Tab
+} from "@mui/material";
+import { useState } from "react";
+import { OpinionIndexes } from "@/types/Opinion";
+import { RATES_KEYS } from "@/const/rates";
+import { ErrorOutlined } from "@mui/icons-material";
 
 export interface NewOpinionRatesFormProps {
   onNext(): void;
@@ -30,17 +30,17 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
   onNext,
   onBack,
   opinions,
-  setOpinion,
+  setOpinion
 }) => {
-  const [tab, setTab] = useState<OpinionIndexes>('acustic');
+  const [tab, setTab] = useState<OpinionIndexes>("acustic");
 
   const canGoNext =
     opinions &&
-    opinions['acustic']?.desc &&
-    opinions['construction']?.desc &&
-    opinions['safety']?.desc &&
-    opinions['internet']?.desc &&
-    opinions['localization']?.desc;
+    opinions["acustic"]?.desc &&
+    opinions["construction"]?.desc &&
+    opinions["safety"]?.desc &&
+    opinions["internet"]?.desc &&
+    opinions["localization"]?.desc;
 
   return (
     <>
@@ -64,8 +64,8 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           label="Akustyka"
           value="acustic"
           icon={
-            opinions?.['acustic']?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: 'red !important;' }} />
+            opinions?.["acustic"]?.desc ? undefined : (
+              <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }
         />
@@ -73,8 +73,8 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           label="Lokalizacja"
           value="localization"
           icon={
-            opinions?.['localization']?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: 'red !important;' }} />
+            opinions?.["localization"]?.desc ? undefined : (
+              <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }
         />
@@ -82,8 +82,8 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           label="Media"
           value="internet"
           icon={
-            opinions?.['internet']?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: 'red !important;' }} />
+            opinions?.["internet"]?.desc ? undefined : (
+              <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }
         />
@@ -91,8 +91,8 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           label="Budownictwo"
           value="construction"
           icon={
-            opinions?.['construction']?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: 'red !important;' }} />
+            opinions?.["construction"]?.desc ? undefined : (
+              <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }
         />
@@ -100,8 +100,8 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           label="Bezpieczeństwo"
           value="safety"
           icon={
-            opinions?.['safety']?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: 'red !important;' }} />
+            opinions?.["safety"]?.desc ? undefined : (
+              <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }
         />
@@ -118,24 +118,24 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
         />
         <TextField
           id="outlined-multiline-static"
-          label={RATES_KEYS.find((key) => key.value === tab)?.name}
+          label={RATES_KEYS.find(key => key.value === tab)?.name}
           inputProps={{ maxLength: 500 }}
           helperText={`${opinions?.[tab]?.desc?.length || 0}/500`}
-          value={opinions?.[tab]?.desc || ''}
-          onChange={(event) => {
+          value={opinions?.[tab]?.desc || ""}
+          onChange={event => {
             setOpinion(tab, opinions?.[tab]?.rate, event.target.value);
           }}
           multiline
           rows={8}
-          sx={{ width: '100%' }}
-          placeholder={RATES_KEYS.find((key) => key.value === tab)?.placeholder}
+          sx={{ width: "100%" }}
+          placeholder={RATES_KEYS.find(key => key.value === tab)?.placeholder}
         />
       </Stack>
       <Grid
         container
         flexDirection="row"
         mt="32px"
-        justifyContent={onBack ? 'space-between' : 'flex-end'}
+        justifyContent={onBack ? "space-between" : "flex-end"}
       >
         {onBack && (
           <Button size="large" type="submit" onClick={onBack}>

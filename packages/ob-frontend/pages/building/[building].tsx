@@ -1,15 +1,15 @@
-import { Layout } from '@/components/Layout/Layout';
+import { Layout } from "@/components/Layout/Layout";
 
-import styles from './building.module.scss';
-import { Card, Grid, Stack, Typography } from '@mui/material';
-import { avgRateForOpinions } from '@/utils/opinions';
-import { dehydrate, QueryClient } from 'react-query';
-import { useRouter } from 'next/router';
-import { useBuilding, getBuilding } from '@/hooks/useBuildings';
-import { NextSeo } from 'next-seo';
-import { OpinionRateBubble } from '@/components/Opinion/OpinionRateBubble';
-import { RATES_KEYS } from '@/const/rates';
-import { OpinionCard } from '@/components/Opinion/OpinionCard';
+import styles from "./building.module.scss";
+import { Card, Grid, Stack, Typography } from "@mui/material";
+import { avgRateForOpinions } from "@/utils/opinions";
+import { dehydrate, QueryClient } from "react-query";
+import { useRouter } from "next/router";
+import { useBuilding, getBuilding } from "@/hooks/useBuildings";
+import { NextSeo } from "next-seo";
+import { OpinionRateBubble } from "@/components/Opinion/OpinionRateBubble";
+import { RATES_KEYS } from "@/const/rates";
+import { OpinionCard } from "@/components/Opinion/OpinionCard";
 
 const Building = () => {
   const router = useRouter();
@@ -28,15 +28,15 @@ const Building = () => {
           url: `https://www.obudynku.pl/building/${data.id}`,
           title: data.address,
           description:
-            'Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.',
+            "Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.",
           images: [
             {
               url: data.image,
               width: 1086,
               height: 440,
-              alt: data.address,
-            },
-          ],
+              alt: data.address
+            }
+          ]
         }}
       />
       <Layout>
@@ -44,7 +44,7 @@ const Building = () => {
           variant="outlined"
           className={styles.ob__building_image}
           style={{
-            backgroundImage: `url(${data.image})`,
+            backgroundImage: `url(${data.image})`
           }}
         />
         <Stack className={styles.ob__building_title} spacing={1}>
@@ -59,7 +59,7 @@ const Building = () => {
             {data?.city}
           </Typography>
           <Grid container gap={1} justifyContent="center">
-            {RATES_KEYS.map((key) => (
+            {RATES_KEYS.map(key => (
               <Grid item key={key.value}>
                 <div className={styles.ob__building_rating}>
                   <OpinionRateBubble
@@ -73,7 +73,7 @@ const Building = () => {
           </Grid>
         </Stack>
         <Stack spacing={1} mb="16px" mt="32px">
-          {data.opinions.map((opinion) => (
+          {data.opinions.map(opinion => (
             <OpinionCard
               desc={opinion.advice}
               key={opinion.id}
@@ -86,24 +86,24 @@ const Building = () => {
               rates={{
                 localization: {
                   value: opinion.localization,
-                  text: opinion.opinions.localization,
+                  text: opinion.opinions.localization
                 },
                 safety: {
                   value: opinion.safety,
-                  text: opinion.opinions.safety,
+                  text: opinion.opinions.safety
                 },
                 internet: {
                   value: opinion.internet,
-                  text: opinion.opinions.internet,
+                  text: opinion.opinions.internet
                 },
                 acustic: {
                   value: opinion.acustic,
-                  text: opinion.opinions.acustic,
+                  text: opinion.opinions.acustic
                 },
                 construction: {
                   value: opinion.construction,
-                  text: opinion.opinions.construction,
-                },
+                  text: opinion.opinions.construction
+                }
               }}
             />
           ))}
@@ -119,11 +119,11 @@ export async function getServerSideProps(context: any) {
   const id = context.query.building;
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery('building', () => getBuilding({ id }));
+  await queryClient.prefetchQuery("building", () => getBuilding({ id }));
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+      dehydratedState: dehydrate(queryClient)
+    }
   };
 }

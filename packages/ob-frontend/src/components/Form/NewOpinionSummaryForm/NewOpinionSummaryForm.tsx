@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, TextField } from '@mui/material';
+import { Button, Grid, Typography, TextField } from "@mui/material";
 
 export interface NewOpinionSummaryFormProps {
   onNext(): void;
@@ -13,7 +13,7 @@ export const NewOpinionSummaryForm: React.FC<NewOpinionSummaryFormProps> = ({
   onBack,
   summary,
   setSummary,
-  nextLabel,
+  nextLabel
 }) => {
   return (
     <>
@@ -31,13 +31,13 @@ export const NewOpinionSummaryForm: React.FC<NewOpinionSummaryFormProps> = ({
         label="Podsumowanie"
         inputProps={{ maxLength: 500 }}
         helperText={`${summary?.length || 0}/500`}
-        value={summary || ''}
-        onChange={(event) => {
+        value={summary || ""}
+        onChange={event => {
           setSummary(event.target.value);
         }}
         multiline
         rows={8}
-        sx={{ width: '100%' }}
+        sx={{ width: "100%" }}
       />
       <Grid
         container

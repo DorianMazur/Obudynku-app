@@ -1,33 +1,33 @@
-import { Stack, Button, Divider, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import ReactCodeInput from 'react-code-input';
-import { useMutation } from 'react-query';
-import { AxiosError } from 'axios';
-import { useUser, verifyEmailCode } from '@/hooks/useUser';
-import * as yup from 'yup';
-import styles from './SignupCodeForm.module.scss';
+import { Stack, Button, Divider, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import ReactCodeInput from "react-code-input";
+import { useMutation } from "react-query";
+import { AxiosError } from "axios";
+import { useUser, verifyEmailCode } from "@/hooks/useUser";
+import * as yup from "yup";
+import styles from "./SignupCodeForm.module.scss";
 
 export interface SignupCodeFormProps {
   onSuccess(): void;
 }
 
 export const SignupCodeForm: React.FC<SignupCodeFormProps> = ({
-  onSuccess,
+  onSuccess
 }) => {
   const { registrationEmail, setRegisterToken } = useUser();
-  const { mutate } = useMutation('verifyEmailCode', verifyEmailCode, {
-    onSuccess: (data) => {
+  const { mutate } = useMutation("verifyEmailCode", verifyEmailCode, {
+    onSuccess: data => {
       setRegisterToken(data.token);
       onSuccess();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       formik.setSubmitting(false);
       formik.setErrors({ code: error?.response?.data?.message });
-    },
+    }
   });
   const formik = useFormik({
     initialValues: {
-      code: '',
+      code: ""
     },
     onSubmit: ({ code }, { setSubmitting }) => {
       if (registrationEmail) {
@@ -38,9 +38,9 @@ export const SignupCodeForm: React.FC<SignupCodeFormProps> = ({
     validationSchema: yup.object({
       code: yup
         .number()
-        .typeError('Kod powinien zawierać tylko cyfry')
-        .required('Wpisz kod przesłany an twój adres email'),
-    }),
+        .typeError("Kod powinien zawierać tylko cyfry")
+        .required("Wpisz kod przesłany an twój adres email")
+    })
   });
 
   return (
@@ -68,7 +68,7 @@ export const SignupCodeForm: React.FC<SignupCodeFormProps> = ({
             type="text"
             fields={5}
             name="code"
-            onChange={formik.handleChange('code')}
+            onChange={formik.handleChange("code")}
             inputMode="numeric"
           />
           {formik.touched.code && formik.errors.code && (

@@ -1,15 +1,15 @@
-import type { AppProps } from 'next/app';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '@/theme';
-import React, { useEffect } from 'react';
-import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { Hydrate } from 'react-query/hydration';
-import { DefaultSeo } from 'next-seo';
-import { SnackbarContext } from '@/context/SnackbarContext';
-import { Alert, AlertColor, Snackbar } from '@mui/material';
-import '../styles/globals.css';
+import type { AppProps } from "next/app";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "@/theme";
+import React, { useEffect } from "react";
+import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { Hydrate } from "react-query/hydration";
+import { DefaultSeo } from "next-seo";
+import { SnackbarContext } from "@/context/SnackbarContext";
+import { Alert, AlertColor, Snackbar } from "@mui/material";
+import "../styles/globals.css";
 
 const queryCache = new QueryCache();
 
@@ -25,9 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
-            cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-          },
-        },
+            cacheTime: 1000 * 60 * 60 * 24 // 24 hours
+          }
+        }
       })
   );
 
@@ -41,23 +41,23 @@ function MyApp({ Component, pageProps }: AppProps) {
             description="Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć."
             canonical="https://www.obudynku.pl/"
             openGraph={{
-              url: 'https://www.obudynku.pl/',
-              title: 'Obudynku',
+              url: "https://www.obudynku.pl/",
+              title: "Obudynku",
               description:
-                'Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.',
+                "Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.",
               images: [
                 {
-                  url: '/og-image.png',
+                  url: "/og-image.png",
                   width: 1086,
                   height: 440,
-                  alt: 'Obudynku',
-                },
-              ],
+                  alt: "Obudynku"
+                }
+              ]
             }}
           />
           <SnackbarContext.Provider
             value={{
-              showSnackbar: setSnackbar,
+              showSnackbar: setSnackbar
             }}
           >
             <Component {...pageProps} />
@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <Alert
                 onClose={() => setSnackbar(null)}
                 severity={snackbar?.severity}
-                sx={{ width: '100%' }}
+                sx={{ width: "100%" }}
               >
                 {snackbar?.message}
               </Alert>

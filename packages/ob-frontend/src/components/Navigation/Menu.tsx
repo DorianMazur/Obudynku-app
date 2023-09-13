@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import styles from './Menu.module.scss';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import styles from "./Menu.module.scss";
 
 import {
   ListAltOutlined,
   PeopleOutlined,
   Search,
-  AddBoxOutlined,
-} from '@mui/icons-material';
-import { useRouter } from 'next/router';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { theme } from '@/theme';
+  AddBoxOutlined
+} from "@mui/icons-material";
+import { useRouter } from "next/router";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { theme } from "@/theme";
 import {
   IconButton,
   Divider,
@@ -18,10 +18,10 @@ import {
   Stack,
   Grid,
   Avatar,
-  Typography,
-} from '@mui/material';
-import Link from 'next/link';
-import { useUser } from '@/hooks/useUser';
+  Typography
+} from "@mui/material";
+import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
 
 const MobileMenu: React.FC = () => {
   const router = useRouter();
@@ -76,10 +76,10 @@ const MobileMenu: React.FC = () => {
         </Link>
       ) : (
         <Stack spacing={2} direction="row">
-          <Button variant="text" onClick={() => router.push('/signin')}>
+          <Button variant="text" onClick={() => router.push("/signin")}>
             Logowanie
           </Button>
-          <Button variant="contained" onClick={() => router.push('/signup')}>
+          <Button variant="contained" onClick={() => router.push("/signup")}>
             Rejestracja
           </Button>
         </Stack>
@@ -90,7 +90,7 @@ const MobileMenu: React.FC = () => {
 
 export const Menu: React.FC = () => {
   const router = useRouter();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { user } = useUser();
 
   return (
@@ -109,7 +109,7 @@ export const Menu: React.FC = () => {
                 alt="Obudynku Logo"
                 height="46"
                 width="138"
-                onClick={() => router.push('/')}
+                onClick={() => router.push("/")}
               />
             </a>
           </Link>
@@ -132,13 +132,13 @@ export const Menu: React.FC = () => {
                   <Button variant="text">Szukaj</Button>
                 </a>
               </Link>
-              <Button onClick={() => router.push('/ranking')} variant="text">
+              <Button onClick={() => router.push("/ranking")} variant="text">
                 Ranking miast
               </Button>
               {user && (
                 <Button
                   variant="contained"
-                  onClick={() => router.push('/opinion/new')}
+                  onClick={() => router.push("/opinion/new")}
                 >
                   Dodaj opinie
                 </Button>
@@ -152,13 +152,13 @@ export const Menu: React.FC = () => {
               </Link>
             ) : (
               <Stack spacing={2} direction="row">
-                <Button variant="text" onClick={() => router.push('/signin')}>
+                <Button variant="text" onClick={() => router.push("/signin")}>
                   Logowanie
                 </Button>
                 <Button
                   variant="contained"
                   startIcon={<PeopleOutlined />}
-                  onClick={() => router.push('/signup')}
+                  onClick={() => router.push("/signup")}
                 >
                   Rejestracja
                 </Button>

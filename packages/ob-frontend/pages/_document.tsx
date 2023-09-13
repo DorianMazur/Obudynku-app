@@ -7,6 +7,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/__env.js" />
         {isProduction && (
           <>

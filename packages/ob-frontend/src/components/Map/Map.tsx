@@ -3,15 +3,15 @@ import {
   MapContainerProps,
   TileLayer,
   useMap,
-  Marker,
-} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+  Marker
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
-import styles from './Map.module.scss';
-import { useEffect, useMemo } from 'react';
-import { MapIconWithRate, MapIconWithoutRate } from './MapIcon';
-import { useRouter } from 'next/router';
-import { debounce } from 'lodash';
+import styles from "./Map.module.scss";
+import { useEffect, useMemo } from "react";
+import { MapIconWithRate, MapIconWithoutRate } from "./MapIcon";
+import { useRouter } from "next/router";
+import { debounce } from "lodash";
 
 export interface MapMarkersData {
   lat: number;
@@ -35,7 +35,7 @@ const Icon: React.FC<IIconProps> = ({ item }) => {
         eventHandlers={{
           click: () => {
             router.push(`//building/${item.building_id}`);
-          },
+          }
         }}
       />
     ),
@@ -53,7 +53,7 @@ export interface IMapPositionerProps {
 const MapPositioner: React.FC<IMapPositionerProps> = ({
   data,
   onSelect,
-  selected,
+  selected
 }) => {
   const map = useMap();
   const router = useRouter();
@@ -64,7 +64,7 @@ const MapPositioner: React.FC<IMapPositionerProps> = ({
 
   useEffect(() => {
     if (map) {
-      map.addEventListener('dblclick', (event: any) => {
+      map.addEventListener("dblclick", (event: any) => {
         onSeletdebounced(event.latlng);
       });
     }
@@ -75,7 +75,7 @@ const MapPositioner: React.FC<IMapPositionerProps> = ({
       map.setView({ lat: 51.759445, lng: 19.457216 }, 6);
       return;
     }
-    const myPoints = data.map((item) => [item.lat, item.lon]);
+    const myPoints = data.map(item => [item.lat, item.lon]);
     /* @ts-ignore */
     const myBounds = new L.LatLngBounds(myPoints);
     map.fitBounds(myBounds, { padding: [20, 20] });
@@ -95,7 +95,7 @@ const MapPositioner: React.FC<IMapPositionerProps> = ({
           icon={MapIconWithoutRate()}
         />
       )}
-      {data?.map((item) => (
+      {data?.map(item => (
         <Icon key={item.id} item={item} />
       ))}
     </div>

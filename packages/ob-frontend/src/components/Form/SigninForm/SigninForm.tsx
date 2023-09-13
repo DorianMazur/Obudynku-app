@@ -1,11 +1,11 @@
-import { Stack, TextField, Button, Divider, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import { useMutation } from 'react-query';
-import { AxiosError } from 'axios';
-import { useUser } from '@/hooks/useUser';
-import styles from './SigninForm.module.scss';
+import { Stack, TextField, Button, Divider, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useRouter } from "next/router";
+import { useMutation } from "react-query";
+import { AxiosError } from "axios";
+import { useUser } from "@/hooks/useUser";
+import styles from "./SigninForm.module.scss";
 
 export interface SigninFormProps {
   onSuccess(): void;
@@ -14,8 +14,8 @@ export interface SigninFormProps {
 export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
   const router = useRouter();
   const { setUser, logIn } = useUser();
-  const { mutate } = useMutation('logIn', logIn, {
-    onSuccess: (data) => {
+  const { mutate } = useMutation("logIn", logIn, {
+    onSuccess: data => {
       setUser(data);
       onSuccess();
     },
@@ -23,14 +23,14 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
       formik.setSubmitting(false);
       formik.setErrors({
         email: error?.response?.data?.message,
-        password: error?.response?.data?.message,
+        password: error?.response?.data?.message
       });
-    },
+    }
   });
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     },
     onSubmit: ({ email, password }, { setSubmitting }) => {
       setSubmitting(true);
@@ -39,13 +39,13 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
     validationSchema: yup.object({
       email: yup
         .string()
-        .email('Wpisz poprawny adres email')
-        .required('Adres email jest wymagany'),
+        .email("Wpisz poprawny adres email")
+        .required("Adres email jest wymagany"),
       password: yup
         .string()
-        .required('Wpisz hasło')
-        .min(6, 'Hasło musi mieć minimum 6 znaków'),
-    }),
+        .required("Wpisz hasło")
+        .min(6, "Hasło musi mieć minimum 6 znaków")
+    })
   });
 
   return (
@@ -69,10 +69,10 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
             name="email"
             fullWidth
             sx={{
-              '.MuiFilledInput-root': {
-                border: '1px solid rgba(228, 230, 232, 0.6)',
-                overflow: 'hidden',
-              },
+              ".MuiFilledInput-root": {
+                border: "1px solid rgba(228, 230, 232, 0.6)",
+                overflow: "hidden"
+              }
             }}
             value={formik.values.email}
             onChange={formik.handleChange}
@@ -87,10 +87,10 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
             type="password"
             fullWidth
             sx={{
-              '.MuiFilledInput-root': {
-                border: '1px solid rgba(228, 230, 232, 0.6)',
-                overflow: 'hidden',
-              },
+              ".MuiFilledInput-root": {
+                border: "1px solid rgba(228, 230, 232, 0.6)",
+                overflow: "hidden"
+              }
             }}
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -114,7 +114,7 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
         variant="text"
         size="large"
         fullWidth
-        onClick={() => router.push('/signup')}
+        onClick={() => router.push("/signup")}
       >
         Zarejestruj się
       </Button>

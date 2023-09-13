@@ -1,7 +1,7 @@
-import { colorByAvg } from '@/utils/opinions';
-import { Typography } from '@mui/material';
+import { colorByAvg } from "@/utils/opinions";
+import { Typography } from "@mui/material";
 
-import styles from './OpinionRateBubble.module.scss';
+import styles from "./OpinionRateBubble.module.scss";
 
 export interface OpinionRateBubble {
   rate: number | string;
@@ -10,7 +10,7 @@ export interface OpinionRateBubble {
 
 export const OpinionRateBubble: React.FC<OpinionRateBubble> = ({
   rate,
-  className,
+  className
 }) => (
   <Typography
     variant="subtitle2"

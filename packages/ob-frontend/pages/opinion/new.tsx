@@ -1,18 +1,18 @@
-import { Layout } from '@/components/Layout/Layout';
-import { useContext, useState } from 'react';
-import { CircularProgress, LinearProgress } from '@mui/material';
-import { NewOpinionLocationForm } from '@/components/Form/NewOpinionLocationForm/NewOpinionLocationForm';
-import { NewOpinionRatesForm } from '@/components/Form/NewOpinionRatesForm/NewOpinionsRatesForm';
-import { NewOpinionSummaryForm } from '@/components/Form/NewOpinionSummaryForm/NewOpinionSummaryForm';
-import { useRouter } from 'next/router';
-import { SnackbarContext } from '@/context/SnackbarContext';
-import { useOpinion } from '@/hooks/useOpinions';
-import { useMutation } from 'react-query';
+import { Layout } from "@/components/Layout/Layout";
+import { useContext, useState } from "react";
+import { CircularProgress, LinearProgress } from "@mui/material";
+import { NewOpinionLocationForm } from "@/components/Form/NewOpinionLocationForm/NewOpinionLocationForm";
+import { NewOpinionRatesForm } from "@/components/Form/NewOpinionRatesForm/NewOpinionsRatesForm";
+import { NewOpinionSummaryForm } from "@/components/Form/NewOpinionSummaryForm/NewOpinionSummaryForm";
+import { useRouter } from "next/router";
+import { SnackbarContext } from "@/context/SnackbarContext";
+import { useOpinion } from "@/hooks/useOpinions";
+import { useMutation } from "react-query";
 
 enum OpinionSteps {
-  Location = 'OPINION_LOCATION',
-  Rates = 'OPINION_RATES',
-  Summary = 'OPINION_SUMMARY',
+  Location = "OPINION_LOCATION",
+  Rates = "OPINION_RATES",
+  Summary = "OPINION_SUMMARY"
 }
 
 const NewOpinion = () => {
@@ -27,19 +27,19 @@ const NewOpinion = () => {
     setNewOpinionSummary,
     setNewOpinionRate,
     newOpinionRates,
-    clearNewOpinion,
+    clearNewOpinion
   } = useOpinion();
-  const { mutate, isLoading } = useMutation('createOpinion', createOpinion, {
-    onSuccess: (data) => {
+  const { mutate, isLoading } = useMutation("createOpinion", createOpinion, {
+    onSuccess: data => {
       if (data) {
         clearNewOpinion();
-        router.push('/profile');
+        router.push("/profile");
         snackbar.showSnackbar({
-          message: 'Pomyślnie dodano opinię',
-          severity: 'success',
+          message: "Pomyślnie dodano opinię",
+          severity: "success"
         });
       }
-    },
+    }
   });
 
   const progressByStep = (step: OpinionSteps) => {
@@ -97,7 +97,7 @@ const NewOpinion = () => {
                       Object.entries(newOpinionRates).map(([o_key, o_val]) => {
                         return [o_key, o_val.desc];
                       })
-                    ),
+                    )
                   })
                 }
               />
@@ -109,11 +109,11 @@ const NewOpinion = () => {
         variant="determinate"
         value={progressByStep(step)}
         sx={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           zIndex: 999,
-          width: '100vw',
-          height: 6,
+          width: "100vw",
+          height: 6
         }}
       />
     </>

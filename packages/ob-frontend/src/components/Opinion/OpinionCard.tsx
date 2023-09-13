@@ -1,10 +1,10 @@
-import { RATES_KEYS } from '@/const/rates';
-import { OpinionIndexes } from '@/types/Opinion';
-import { labelByAvg } from '@/utils/opinions';
-import { Card, Typography, CardProps, Grid, Chip } from '@mui/material';
-import React from 'react';
-import styles from './OpinionCard.module.scss';
-import { OpinionRateBubble } from './OpinionRateBubble';
+import { RATES_KEYS } from "@/const/rates";
+import { OpinionIndexes } from "@/types/Opinion";
+import { labelByAvg } from "@/utils/opinions";
+import { Card, Typography, CardProps, Grid, Chip } from "@mui/material";
+import React from "react";
+import styles from "./OpinionCard.module.scss";
+import { OpinionRateBubble } from "./OpinionRateBubble";
 
 export interface OpinionCardProps extends CardProps {
   desc?: string;
@@ -67,7 +67,7 @@ export const OpinionCard: React.FC<OpinionCardProps> = ({
       )}
       {rates && (
         <Grid container gap={2}>
-          {Object.keys(rates).map((rateKey) => (
+          {Object.keys(rates).map(rateKey => (
             <div className={styles.ob__opinionCard_rate} key={rate}>
               <OpinionRateBubble
                 rate={Number(rates[rateKey as OpinionIndexes].value).toFixed(1)}
@@ -79,7 +79,7 @@ export const OpinionCard: React.FC<OpinionCardProps> = ({
                 fontWeight="600"
                 ml="8px"
               >
-                {RATES_KEYS.find((key) => key.value === rateKey)?.name}
+                {RATES_KEYS.find(key => key.value === rateKey)?.name}
               </Typography>
               <Typography
                 variant="body2"
