@@ -16,6 +16,7 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/env.sh ./env.sh
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/static ./packages/ob-frontend/.next/static
 COPY --from=builder /app/packages/ob-frontend/public ./packages/ob-frontend/public
 # These are partially installed for some reason. Remove or it won't work.
