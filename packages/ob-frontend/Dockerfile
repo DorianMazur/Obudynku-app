@@ -1,6 +1,5 @@
 # Install dependencies only when needed
 FROM arm64v8/node:18-alpine AS builder
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY . .
 RUN yarn install --frozen-lockfile
