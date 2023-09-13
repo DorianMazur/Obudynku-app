@@ -4,6 +4,8 @@ on:
     paths:
       - packages/ob-backend/**
       - packages/ob-kube/backend/**
+      - .github/**
+      - package.json
     branches:
       - main
 
