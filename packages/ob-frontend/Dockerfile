@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM arm64v8/node:18-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN yarn install --frozen-lockfile
@@ -8,7 +8,7 @@ RUN echo ${NODE_ENV}
 RUN NODE_ENV=${NODE_ENV} yarn build:frontend
 
 # Production image, copy all the files and run next
-FROM arm64v8/node:18-alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 RUN addgroup -g 1001 -S nodejs

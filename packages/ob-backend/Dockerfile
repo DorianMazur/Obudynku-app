@@ -1,4 +1,4 @@
-FROM arm64v8/node:18-alpine as builder
+FROM node:18-alpine as builder
 
 WORKDIR /app
 COPY . .
@@ -6,7 +6,7 @@ RUN yarn install --frozen-lockfile
 RUN yarn build:backend
 
 # Second Stage : Setup command to run your app
-FROM arm64v8/alpine:latest
+FROM alpine:latest
 WORKDIR /app
 ENV NODE_ENV=production
 
