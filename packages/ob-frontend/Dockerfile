@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:16.13-alpine AS builder
+FROM arm64v8/node:18-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY . .
@@ -9,7 +9,7 @@ RUN echo ${NODE_ENV}
 RUN NODE_ENV=${NODE_ENV} yarn build:frontend
 
 # Production image, copy all the files and run next
-FROM node:16.13-alpine AS runner
+FROM arm64v8/node:18-alpine AS runner
 WORKDIR /app
 
 RUN addgroup -g 1001 -S nodejs

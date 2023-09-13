@@ -19,7 +19,7 @@ jobs:
             - name: Install Node.js.
               uses: actions/setup-node@v2
               with:
-                  node-version: '16.13'
+                  node-version: '18.12'
 
             - name: Cache Yarn cache.
               uses: c-hive/gha-yarn-cache@v2
@@ -55,7 +55,7 @@ jobs:
                 push: true
                 context: .
                 file: ./packages/ob-frontend/Dockerfile
-                platforms: linux/amd64,linux/arm64
+                platforms: linux/amd64,linux/arm64/v8
                 tags: |
                   ghcr.io/obudynku/ob-frontend:latest
                   ghcr.io/obudynku/ob-frontend:${{ github.sha }}
