@@ -4,9 +4,8 @@
   "author": "Dorian Mazur <mazur.dorian15@gmail.com>",
   "license": "GPL-3.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "node .next/standalone/packages/ob-frontend/server.js",
+    "dev": "./env.sh next dev",
+    "build": "./env.sh next build",
     "lint": "next lint"
   },
   "dependencies": {

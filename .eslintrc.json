@@ -5,7 +5,7 @@
     "prettier/prettier": [
       "error",
       {
-        "singleQuote": true
+        "singleQuote": false
       }
     ],
     "react/jsx-filename-extension": [

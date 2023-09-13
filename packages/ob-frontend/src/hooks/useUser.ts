@@ -1,7 +1,8 @@
-import { useAuthStore } from '@/store/useAuthStore';
-import { useUserStore } from '@/store/useUserStore';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useAuthStore } from "@/store/useAuthStore";
+import { useUserStore } from "@/store/useUserStore";
+import { env } from "@/utils";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export interface LoginProps {
   email: string;
@@ -10,7 +11,7 @@ export interface LoginProps {
 
 export const logIn = async (props: LoginProps) => {
   const response = await axios.post<{ token: string; email: string }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+    `${env("NEXT_PUBLIC_API_URL")}/auth/login`,
     props
   );
   return response.data;
@@ -27,7 +28,7 @@ export interface RequestEmailCodeProps {
 
 export const requestEmailCode = async (props: RequestEmailCodeProps) => {
   const response = await axios.post<void>(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/register/email`,
+    `${env("NEXT_PUBLIC_API_URL")}/auth/register/email`,
     props
   );
   return props;
@@ -40,7 +41,7 @@ export interface VerifyEmailCodeProps {
 
 export const verifyEmailCode = async (props: VerifyEmailCodeProps) => {
   const response = await axios.post<{ token: string }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/register/email/verify`,
+    `${env("NEXT_PUBLIC_API_URL")}/auth/register/email/verify`,
     props
   );
   return response.data;
@@ -53,7 +54,7 @@ export interface SetPasswordProps {
 export const setPassword =
   (token?: string) => async (props: SetPasswordProps) => {
     const response = await axios.post<{ token: string; email: string }>(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/register/finish`,
+      `${env("NEXT_PUBLIC_API_URL")}/auth/register/finish`,
       props,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -66,7 +67,7 @@ export const useUser = () => {
     registerToken,
     setRegisterToken,
     setRegistrationEmail,
-    registrationEmail,
+    registrationEmail
   } = useAuthStore();
 
   const [hasHydrated, setHasHydrated] = useState<boolean>(false);
@@ -85,6 +86,6 @@ export const useUser = () => {
     registerToken,
     setRegisterToken,
     registrationEmail,
-    setRegistrationEmail,
+    setRegistrationEmail
   };
 };

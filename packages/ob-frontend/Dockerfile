@@ -9,7 +9,10 @@ RUN NODE_ENV=${NODE_ENV} yarn build:frontend
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
+
 WORKDIR /app
+
+RUN apk add --no-cache dumb-init bash
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
@@ -26,4 +29,5 @@ USER nextjs
 EXPOSE 3000
 
 ENV NEXT_TELEMETRY_DISABLED 1
-CMD ["node", "./packages/ob-frontend/server.js"]
+ENTRYPOINT ["./env.sh"]
+CMD ["dumb-init", "node", "./packages/ob-frontend/server.js"]

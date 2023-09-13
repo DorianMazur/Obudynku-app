@@ -29,6 +29,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    env:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: 1
     strategy:
       matrix:
         platform:

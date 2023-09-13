@@ -1,16 +1,20 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import { env } from "@/utils";
+import { Html, Head, Main, NextScript } from "next/document";
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 export default function Document() {
   return (
     <Html>
       <Head>
+        <script src="/__env.js" />
         {isProduction && (
           <>
             <script
               async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${env(
+                "NEXT_PUBLIC_GA_TRACKING_ID"
+              )}`}
             />
             <script
               // eslint-disable-next-line react/no-danger
@@ -19,10 +23,10 @@ export default function Document() {
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GA_TRACKING_ID}', {
+                  gtag('config', '${env("NEXT_PUBLIC_GA_TRACKING_ID")}', {
                     page_path: window.location.pathname,
                   });
-                `,
+                `
               }}
             />
           </>

@@ -4,6 +4,7 @@
 **/dist
 **/node_modules
 **/.DS_Store
+**/public/__env.js
 Dockerfile
 docs
 *.log
