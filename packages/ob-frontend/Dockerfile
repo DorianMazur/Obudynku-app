@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN yarn install --frozen-lockfile
+RUN yarn install --network-timeout 100000 --frozen-lockfile 
 RUN yarn build:frontend
 
 # Production image, copy all the files and run next
