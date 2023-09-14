@@ -160,5 +160,3 @@ __debug "`cat "$ENVSH_ENV"`"
 
 __info "$(__green "\nenv.sh done\n")"
 
-# Accepting commands (for Docker)
-exec "$@"
