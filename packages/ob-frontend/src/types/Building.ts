@@ -1,4 +1,4 @@
-import { Opinion } from './Opinion';
+import { Opinion } from "./Opinion";
 
 export interface Building {
   id: string;
@@ -6,6 +6,6 @@ export interface Building {
   city: string;
   lat: number;
   lon: number;
-  opinions: Omit<Opinion, 'building'>[];
-  image: string;
+  opinions: Omit<Opinion, "building">[];
+  hasImage?: boolean;
 }

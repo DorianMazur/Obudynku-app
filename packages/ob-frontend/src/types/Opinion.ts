@@ -1,4 +1,4 @@
-import { Building } from './Building';
+import { Building } from "./Building";
 
 export interface Opinion {
   id: string;
@@ -9,17 +9,17 @@ export interface Opinion {
   safety: number;
   acustic: number;
   opinions: Record<OpinionIndexes, string>;
-  status: 'APPROVED' | 'PENDING';
-  building: Omit<Building, 'opinions'>;
+  status: "APPROVED" | "PENDING";
+  building: Omit<Building, "opinions">;
   advice?: string;
 }
 
 export type OpinionIndexes =
-  | 'acustic'
-  | 'localization'
-  | 'safety'
-  | 'internet'
-  | 'construction';
+  | "acustic"
+  | "localization"
+  | "safety"
+  | "internet"
+  | "construction";
 
 export interface OpinionRequest {
   flat_number?: string;

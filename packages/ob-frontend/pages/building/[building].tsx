@@ -10,6 +10,7 @@ import { NextSeo } from "next-seo";
 import { OpinionRateBubble } from "@/components/Opinion/OpinionRateBubble";
 import { RATES_KEYS } from "@/const/rates";
 import { OpinionCard } from "@/components/Opinion/OpinionCard";
+import { env } from "@/utils";
 
 const Building = () => {
   const router = useRouter();
@@ -29,27 +30,33 @@ const Building = () => {
           title: data.address,
           description:
             "Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.",
-          images: [
-            {
-              url: data.image,
-              width: 1086,
-              height: 440,
-              alt: data.address
-            }
-          ]
+          images: data.hasImage
+            ? [
+                {
+                  url: `${env("NEXT_PUBLIC_API_URL")}/building/${id}/image`,
+                  width: 1086,
+                  height: 440,
+                  alt: data.address
+                }
+              ]
+            : undefined
         }}
       />
       <Layout>
-        <Card
-          variant="outlined"
-          className={styles.ob__building_image}
-          style={{
-            backgroundImage: `url(${data.image})`
-          }}
-        />
+        {data.hasImage && (
+          <Card
+            variant="outlined"
+            className={styles.ob__building_image}
+            style={{
+              backgroundImage: `url(${env(
+                "NEXT_PUBLIC_API_URL"
+              )}/building/${id}/image)`
+            }}
+          />
+        )}
         <Stack className={styles.ob__building_title} spacing={1}>
           <Typography variant="h4" fontWeight="700">
-            {data?.address}
+            {data.address}
           </Typography>
           <Typography
             variant="subtitle2"

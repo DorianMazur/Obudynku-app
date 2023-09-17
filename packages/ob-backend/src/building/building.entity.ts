@@ -39,8 +39,8 @@ export class BuildingEntity {
   opinions: OpinionEntity[];
 
   @Column({
-    type: 'varchar',
+    type: 'boolean',
     nullable: true,
   })
-  image: string;
+  hasImage: boolean;
 }

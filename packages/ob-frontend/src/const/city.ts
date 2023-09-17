@@ -5,7 +5,7 @@ export const CITIES = {
   Gdynia: { lat: 54.51889, lng: 18.53188 },
   Gdańsk: { lat: 54.372158, lng: 18.638306 },
   Gliwice: { lat: 50.29761, lng: 18.67658 },
-  'Gorzów Wielkopolski': { lat: 52.73679, lng: 15.22878 },
+  "Gorzów Wielkopolski": { lat: 52.73679, lng: 15.22878 },
   Katowice: { lat: 50.270908, lng: 19.039993 },
   Kołobrzeg: { lat: 54.175919, lng: 15.583267 },
   Kraków: { lat: 50.049683, lng: 19.944544 },
@@ -20,5 +20,5 @@ export const CITIES = {
   Sosnowiec: { lat: 50.286263, lng: 19.104078 },
   Szczecin: { lat: 53.428543, lng: 14.552812 },
   Warszawa: { lat: 52.237049, lng: 21.017532 },
-  Wrocław: { lat: 51.107883, lng: 17.038538 },
+  Wrocław: { lat: 51.107883, lng: 17.038538 }
 };

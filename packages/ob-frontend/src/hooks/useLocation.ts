@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { OpenStreetMapAddress } from '@/types/Location';
-import { CITIES } from '@/const/city';
+import axios from "axios";
+import { OpenStreetMapAddress } from "@/types/Location";
+import { CITIES } from "@/const/city";
 
 interface GetLocationProps {
   lat: string | number;

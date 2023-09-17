@@ -1,7 +1,7 @@
-import { OpenStreetMapAddress } from '@/types/Location';
-import { OpinionIndexes } from '@/types/Opinion';
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { OpenStreetMapAddress } from "@/types/Location";
+import { OpinionIndexes } from "@/types/Opinion";
+import create from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface UseOpinionStore {
   newOpinionLocation?: OpenStreetMapAddress | null;
@@ -23,9 +23,9 @@ export const useOpinionStore = create(
       newOpinionLocation: undefined,
       newOpinionRates: undefined,
       newOpinionSummary: undefined,
-      setNewOpinionSummary: (newOpinionSummary) => {
+      setNewOpinionSummary: newOpinionSummary => {
         set(() => ({
-          newOpinionSummary,
+          newOpinionSummary
         }));
       },
       setNewOpinionRate: (key, rate, desc) => {
@@ -40,21 +40,21 @@ export const useOpinionStore = create(
           return { newOpinionRates };
         });
       },
-      setNewOpinionLocation: (newOpinionLocation) => {
+      setNewOpinionLocation: newOpinionLocation => {
         set(() => ({
-          newOpinionLocation,
+          newOpinionLocation
         }));
       },
       clearNewOpinion: () => {
         set(() => ({
           newOpinionLocation: undefined,
           newOpinionRates: undefined,
-          newOpinionSummary: undefined,
+          newOpinionSummary: undefined
         }));
-      },
+      }
     }),
     {
-      name: 'opinion',
+      name: "opinion"
     }
   )
 );

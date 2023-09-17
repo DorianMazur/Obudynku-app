@@ -1,8 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BuildingEntity } from './building.entity';
 import { HttpService } from '@nestjs/axios';
+import { createReadStream, createWriteStream } from 'fs';
+
+const imagesPath = process.env.IMAGES_PATH || './dist';
 
 @Injectable()
 export class BuildingService {
@@ -23,34 +26,12 @@ export class BuildingService {
         { status: 'APPROVED' },
       )
       .getOne();
-    if (!building.opinions.length) return building;
-    /*if (!building.image) {
-      const writeStream = createWriteStream(`./${building.id}.jpg`);
-      const response = await this.httpService.axiosRef({
-        url: ``,
-        method: 'GET',
-        responseType: 'stream',
-      });
-      response.data.pipe(writeStream);
-      await new Promise((resolve) =>
-        writeStream.on('finish', async () => resolve('finish')),
-      );
-
-      const s3 = new S3();
-      const readStream = readFileSync(`./${building.id}.jpg`);
-      const uploadResult = await s3
-        .upload({
-          Bucket: 'ob-backend',
-          Body: readStream,
-          ACL: 'public-read',
-          Key: `buildings/${building.id}.jpg`,
-        })
-        .promise();
-      building.image = uploadResult.Location;
-      this.buildingRepository.save(building);
-      unlinkSync(`./${building.id}.jpg`);
-    }*/
     return building;
+  }
+
+  async getBuildingImage(id: string) {
+    const file = createReadStream(`${imagesPath}/${id}.jpg`);
+    return new StreamableFile(file);
   }
 
   async searchBuildings(city: string, search?: string) {
@@ -96,6 +77,31 @@ export class BuildingService {
       lat,
       lon,
     });
+    if (process.env.GOOGLE_STREETVIEW_KEY) {
+      const streetviewMetadata = await this.httpService.axiosRef<{
+        status?: 'OK';
+      }>({
+        url: `https://maps.googleapis.com/maps/api/streetview/metadata?source=outdoor&location=${newBuilding.lat},${newBuilding.lon}&pitch=0&key=${process.env.GOOGLE_STREETVIEW_KEY}`,
+        method: 'GET',
+        responseType: 'json',
+      });
+      if (streetviewMetadata.data.status === 'OK') {
+        const streetviewImage = await this.httpService.axiosRef({
+          url: `https://maps.googleapis.com/maps/api/streetview?size=1000x500&source=outdoor&location=${newBuilding.lat},${newBuilding.lon}&pitch=0&key=${process.env.GOOGLE_STREETVIEW_KEY}`,
+          method: 'GET',
+          responseType: 'stream',
+        });
+        const writeStream = streetviewImage.data.pipe(
+          createWriteStream(`${imagesPath}/${newBuilding.id}.jpg`),
+        );
+        await new Promise((resolve) =>
+          writeStream.on('finish', () => resolve('finish')),
+        );
+        newBuilding.hasImage = true;
+      } else {
+        newBuilding.hasImage = false;
+      }
+    }
     await this.buildingRepository.save(newBuilding);
     return newBuilding;
   }

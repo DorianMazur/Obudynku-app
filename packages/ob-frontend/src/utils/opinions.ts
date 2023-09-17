@@ -1,7 +1,7 @@
-import { Opinion, OpinionIndexes } from '@/types/Opinion';
+import { Opinion, OpinionIndexes } from "@/types/Opinion";
 
 export const avgRateForOpinions = (
-  opinions: Array<Opinion | Omit<Opinion, 'building'>>
+  opinions: Array<Opinion | Omit<Opinion, "building">>
 ) => {
   const radarChart: Record<OpinionIndexes, number | string> = opinions.reduce(
     (prev, curr) => {
@@ -17,10 +17,10 @@ export const avgRateForOpinions = (
       localization: 0,
       safety: 0,
       internet: 0,
-      construction: 0,
+      construction: 0
     }
   );
-  Object.keys(radarChart).forEach((key) => {
+  Object.keys(radarChart).forEach(key => {
     const _key = key as OpinionIndexes;
     radarChart[_key] = ((radarChart[_key] as number) / opinions.length).toFixed(
       1
@@ -37,7 +37,7 @@ export const avgRateForOpinion = (
     localization: rates.localization,
     safety: rates.safety,
     internet: rates.internet,
-    construction: rates.construction,
+    construction: rates.construction
   };
   return (
     Object.keys(pickedKeys).reduce((prev, key) => {
@@ -49,20 +49,20 @@ export const avgRateForOpinion = (
 
 export const colorByAvg = (avg: number | string) => {
   if (Number(avg) > 8) {
-    return '#00D066';
+    return "#00D066";
   }
   if (Number(avg) > 4.5) {
-    return '#FFBD00';
+    return "#FFBD00";
   }
-  return '#FF4E00';
+  return "#FF4E00";
 };
 
 export const labelByAvg = (avg: number | string) => {
   if (Number(avg) > 8) {
-    return 'Świetny';
+    return "Świetny";
   }
   if (Number(avg) > 4.5) {
-    return 'Dobry';
+    return "Dobry";
   }
-  return 'Przeciętny';
+  return "Przeciętny";
 };

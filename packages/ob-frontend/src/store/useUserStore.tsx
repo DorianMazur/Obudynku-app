@@ -1,5 +1,5 @@
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import create from "zustand";
+import { persist } from "zustand/middleware";
 
 interface User {
   token: string;
@@ -15,14 +15,14 @@ export const useUserStore = create(
   persist<UseUserStore>(
     (set, get) => ({
       user: undefined,
-      setUser: (user) => {
+      setUser: user => {
         set(() => ({
-          user,
+          user
         }));
-      },
+      }
     }),
     {
-      name: 'user',
+      name: "user"
     }
   )
 );

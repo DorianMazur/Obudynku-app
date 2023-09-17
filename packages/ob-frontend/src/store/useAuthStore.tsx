@@ -1,4 +1,4 @@
-import create from 'zustand';
+import create from "zustand";
 
 export interface UseAuthStore {
   registrationEmail?: string;
@@ -10,14 +10,14 @@ export interface UseAuthStore {
 export const useAuthStore = create<UseAuthStore>((set, get) => ({
   registrationEmail: undefined,
   registerToken: undefined,
-  setRegistrationEmail: (registrationEmail) => {
+  setRegistrationEmail: registrationEmail => {
     set(() => ({
-      registrationEmail,
+      registrationEmail
     }));
   },
-  setRegisterToken: (registerToken) => {
+  setRegisterToken: registerToken => {
     set(() => ({
-      registerToken,
+      registerToken
     }));
-  },
+  }
 }));

@@ -1,4 +1,3 @@
-import { useQuery } from "react-query";
 import axios from "axios";
 import { Opinion, OpinionRequest, OpinionStatistic } from "@/types/Opinion";
 import useOpinionStore from "@/store/useOpinionStore";

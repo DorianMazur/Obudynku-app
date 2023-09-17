@@ -9,7 +9,10 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    process.env.NODE_ENV === 'production'
+    ConfigModule.forRoot({
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
+    }),
+    process.env.MYSQL_HOST
       ? TypeOrmModule.forRoot({
           type: 'mysql',
           host: process.env.MYSQL_HOST,
@@ -18,6 +21,8 @@ import { ConfigModule } from '@nestjs/config';
           password: process.env.MYSQL_PASSWORD,
           database: process.env.MYSQL_DATABASE,
           entities: ['dist/**/*.entity{.ts,.js}'],
+          autoLoadEntities: true,
+          synchronize: false,
         })
       : TypeOrmModule.forRoot({
           type: 'better-sqlite3',
@@ -26,9 +31,6 @@ import { ConfigModule } from '@nestjs/config';
           entities: ['dist/**/*.entity{.ts,.js}'],
           synchronize: true,
         }),
-    ConfigModule.forRoot({
-      ignoreEnvFile: process.env.NODE_ENV === 'production',
-    }),
     UserModule,
     AuthModule,
     HealthModule,
