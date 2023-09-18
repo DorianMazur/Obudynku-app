@@ -20,14 +20,39 @@ Obudynku is an application for checking buildings located in Poland. The opinion
 
 ## How to Install
 ### Prerequisites
-- Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) (Node Package Manager) installed. You can check by running:  ```bash  node -v  npm -v  ```
-- Ensure you have [Yarn](https://yarnpkg.com/). Install it globally:  ```bash  npm install -g yarn  ```
+- Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) (Node Package Manager) installed. You can check by running:  ``` node -v  npm -v ```
+- Ensure you have [Yarn](https://yarnpkg.com/). Install it globally:  ``` npm install -g yarn ```
 ### Installation Steps
 1. **Clone the Repository**
-2. **Install Dependencies** Install the required dependencies:   ```bash   yarn install   ```
-3. **Run the Project**   Once the dependencies are installed, you can run the project using:   ```bash   yarn start:frontend   ``` and ```bash   yarn start:backend   ``` 
+2. **Install Dependencies** Install the required dependencies:
+```bash
+yarn install 
+```
+3. **Run the Project**   Once the dependencies are installed, you can run the project using:
+```bash   
+yarn start:frontend   
+#and
+yarn start:backend 
+``` 
 4. **Access the Application** Once the project is running, you can access it by opening your browser and navigating to `http://localhost:3000`.
 
+## ENV Variables
+### ob-frontend
+| Variable name | Description | Required |
+| ---- | ---- | ---- |
+| NEXT_PUBLIC_GA_TRACKING_ID |  | No |
+| NEXT_PUBLIC_API_URL | | Yes |
+
+### ob-backend
+| Variable name | Description | Required |
+| ---- | ---- | ---- |
+| JWT_SECRET_KEY | JWT used to sign auth tokens | Yes |
+| GOOGLE_STREETVIEW_KEY | Google API key used to fetch streetview photos | No |
+| MYSQL_HOST | Host of the mysql server, sqlite will be used if this variable is not present | No
+| MYSQL_PORT | | Yes, if MYSQL_HOST present
+| MYSQL_USERNAME | | Yes, if MYSQL_HOST present
+| MYSQL_PASSWORD | | Yes, if MYSQL_HOST present
+| MYSQL_DATABASE | | Yes, if MYSQL_HOST present
 
 ## License
 
