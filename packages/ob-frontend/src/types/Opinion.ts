@@ -5,7 +5,6 @@ export interface Opinion {
   flat_number: number;
   construction: number;
   localization: number;
-  internet: number;
   safety: number;
   acustic: number;
   opinions: Record<OpinionIndexes, string>;
@@ -18,7 +17,6 @@ export type OpinionIndexes =
   | "acustic"
   | "localization"
   | "safety"
-  | "internet"
   | "construction";
 
 export interface OpinionRequest {
@@ -38,7 +36,6 @@ export interface OpinionStatistic {
   acustic: number;
   localization: number;
   safety: number;
-  internet: number;
   construction: number;
   count: number;
 }

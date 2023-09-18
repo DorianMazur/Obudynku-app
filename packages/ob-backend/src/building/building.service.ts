@@ -42,7 +42,6 @@ export class BuildingService {
         'opinion.construction',
         'opinion.acustic',
         'opinion.localization',
-        'opinion.internet',
       ])
       .leftJoin('building.opinions', 'opinion')
       .where(

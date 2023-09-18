@@ -36,11 +36,6 @@ export class OpinionEntity {
     type: 'mediumint',
     nullable: false,
   })
-  internet: number;
-  @Column({
-    type: 'mediumint',
-    nullable: false,
-  })
   safety: number;
   @Column({
     type: 'mediumint',

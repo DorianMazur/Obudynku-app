@@ -64,7 +64,6 @@ export const getOpinionStatistics = async () => {
   return response.data.map(item => ({
     ...item,
     localization: parseFloat(Number(item.localization).toFixed(2)),
-    internet: parseFloat(Number(item.internet).toFixed(2)),
     safety: parseFloat(Number(item.safety).toFixed(2)),
     construction: parseFloat(Number(item.construction).toFixed(2)),
     acustic: parseFloat(Number(item.acustic).toFixed(2))

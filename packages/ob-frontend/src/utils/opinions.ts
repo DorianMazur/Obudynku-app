@@ -8,7 +8,6 @@ export const avgRateForOpinions = (
       prev.acustic += curr.acustic;
       prev.construction += curr.construction;
       prev.localization += curr.localization;
-      prev.internet += curr.internet;
       prev.safety += curr.safety;
       return prev;
     },
@@ -16,7 +15,6 @@ export const avgRateForOpinions = (
       acustic: 0,
       localization: 0,
       safety: 0,
-      internet: 0,
       construction: 0
     }
   );
@@ -36,7 +34,6 @@ export const avgRateForOpinion = (
     acustic: rates.acustic,
     localization: rates.localization,
     safety: rates.safety,
-    internet: rates.internet,
     construction: rates.construction
   };
   return (
@@ -48,20 +45,20 @@ export const avgRateForOpinion = (
 };
 
 export const colorByAvg = (avg: number | string) => {
-  if (Number(avg) > 8) {
+  if (Number(avg) >= 8) {
     return "#00D066";
   }
-  if (Number(avg) > 4.5) {
+  if (Number(avg) >= 4.5) {
     return "#FFBD00";
   }
   return "#FF4E00";
 };
 
 export const labelByAvg = (avg: number | string) => {
-  if (Number(avg) > 8) {
+  if (Number(avg) >= 8) {
     return "Świetny";
   }
-  if (Number(avg) > 4.5) {
+  if (Number(avg) >= 4.5) {
     return "Dobry";
   }
   return "Przeciętny";

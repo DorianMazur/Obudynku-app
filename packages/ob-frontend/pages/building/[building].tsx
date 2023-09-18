@@ -99,10 +99,6 @@ const Building = () => {
                   value: opinion.safety,
                   text: opinion.opinions.safety
                 },
-                internet: {
-                  value: opinion.internet,
-                  text: opinion.opinions.internet
-                },
                 acustic: {
                   value: opinion.acustic,
                   text: opinion.opinions.acustic

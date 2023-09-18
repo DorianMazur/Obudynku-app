@@ -1,15 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Header,
-  Param,
-  Post,
-  StreamableFile,
-} from '@nestjs/common';
+import { Body, Controller, Get, Header, Param, Post } from '@nestjs/common';
 import { SearchBuildingsDTO } from './building.dto';
 import { BuildingService } from './building.service';
-import { createReadStream } from 'fs';
 
 @Controller('building')
 export class BuildingController {

@@ -68,12 +68,11 @@ export class OpinionService {
     const statistics = await this.opinionRepository
       .createQueryBuilder('opinion')
       .select([
-        'AVG(opinion.internet) as internet',
         'AVG(opinion.acustic) as acustic',
         'AVG(opinion.construction) as construction',
         'AVG(opinion.localization) as localization',
         'AVG(opinion.safety) as safety',
-        'COUNT(opinion.internet) as count',
+        'COUNT(opinion.acustic) as count',
         'building.city as city',
       ])
       .leftJoin('opinion.building', 'building')
@@ -111,7 +110,6 @@ export class OpinionService {
       flat_number: data.flat_number,
       construction: data.rates.construction,
       localization: data.rates.localization,
-      internet: data.rates.internet,
       safety: data.rates.safety,
       acustic: data.rates.acustic,
       opinions: data.opinions,
@@ -143,7 +141,6 @@ export class OpinionService {
       {
         construction: data.rates.construction,
         localization: data.rates.localization,
-        internet: data.rates.internet,
         safety: data.rates.safety,
         acustic: data.rates.acustic,
         opinions: data.opinions,

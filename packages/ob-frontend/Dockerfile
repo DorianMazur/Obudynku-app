@@ -23,7 +23,6 @@ RUN chown -R nextjs:nodejs /app
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/static ./packages/ob-frontend/.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/public ./packages/ob-frontend/public
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/env.sh ./packages/ob-frontend/env.sh
-COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/entrypoint.sh ./packages/ob-frontend/entrypoint.sh
 
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/static ./.next/static
@@ -37,7 +36,6 @@ USER nextjs
 EXPOSE 3000
 
 RUN ["chmod", "+x", "./env.sh"]
-RUN ["chmod", "+x", "./entrypoint.sh"]
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./env.sh"]
 CMD ["dumb-init", "node", "./server.js"]

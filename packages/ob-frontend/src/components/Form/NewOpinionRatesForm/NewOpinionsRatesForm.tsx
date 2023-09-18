@@ -39,7 +39,6 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
     opinions["acustic"]?.desc &&
     opinions["construction"]?.desc &&
     opinions["safety"]?.desc &&
-    opinions["internet"]?.desc &&
     opinions["localization"]?.desc;
 
   return (
@@ -74,15 +73,6 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
           value="localization"
           icon={
             opinions?.["localization"]?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: "red !important;" }} />
-            )
-          }
-        />
-        <Tab
-          label="Media"
-          value="internet"
-          icon={
-            opinions?.["internet"]?.desc ? undefined : (
               <ErrorOutlined sx={{ color: "red !important;" }} />
             )
           }

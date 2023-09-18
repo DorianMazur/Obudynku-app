@@ -17,12 +17,6 @@ export const RATES_KEYS: {
     placeholder: "Jak bezpiecznie jest w tej okolicy? Czy występują włamania?"
   },
   {
-    value: "internet",
-    name: "Media",
-    placeholder:
-      "Czy w budynku jest światłowód? Czy występują problemy w dostawie internetu? Czy w budynku jest dobry zasięg sieci komórkowej?'"
-  },
-  {
     value: "acustic",
     name: "Akustyka",
     placeholder:
