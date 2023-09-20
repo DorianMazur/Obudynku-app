@@ -44,10 +44,14 @@ export class OpinionService {
     return opinions;
   }
 
-  async getLatestOpinions() {
-    // SELECT AVG(construction), `building`.`city` FROM opinion LEFT JOIN `building` `building` ON `building`.`id`=`opinion`.`buildingId` GROUP BY `building`.`city`
-    const opinions = await this.opinionRepository
-      .createQueryBuilder('opinion')
+  async getLatestOpinions(page: number) {
+    const queryBuilder = this.opinionRepository.createQueryBuilder('opinion');
+    queryBuilder
+      .orderBy('opinion.created_date', 'DESC')
+      .skip((page - 1) * 5)
+      .take(5);
+    const itemCount = await queryBuilder.getCount();
+    const opinions = await queryBuilder
       .addSelect([
         'building.id',
         'building.city',
@@ -58,10 +62,8 @@ export class OpinionService {
       .leftJoin('opinion.building', 'building')
       .where('opinion.status = :status', { status: 'APPROVED' })
       .orderBy('opinion.created_date', 'DESC')
-      .skip(0)
-      .take(5)
       .getMany();
-    return opinions;
+    return { opinions, itemCount, pageCount: Math.ceil(itemCount / 5) };
   }
 
   async getOpinionStatistics() {

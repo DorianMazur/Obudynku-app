@@ -30,49 +30,41 @@ const MobileMenu: React.FC = () => {
   return (
     <>
       <Link href="/">
-        <a>
-          <Stack>
-            <IconButton>
-              <Search />
-            </IconButton>
-            <Typography variant="caption" fontWeight={600} color="#8083a3">
-              Szukaj
-            </Typography>
-          </Stack>
-        </a>
+        <Stack>
+          <IconButton>
+            <Search />
+          </IconButton>
+          <Typography variant="caption" fontWeight={600} color="#8083a3">
+            Szukaj
+          </Typography>
+        </Stack>
       </Link>
       <Link href="/ranking">
-        <a>
-          <Stack alignItems="center">
-            <IconButton>
-              <ListAltOutlined />
-            </IconButton>
-            <Typography variant="caption" fontWeight={600} color="#8083a3">
-              Ranking
-            </Typography>
-          </Stack>
-        </a>
+        <Stack alignItems="center">
+          <IconButton>
+            <ListAltOutlined />
+          </IconButton>
+          <Typography variant="caption" fontWeight={600} color="#8083a3">
+            Ranking
+          </Typography>
+        </Stack>
       </Link>
       {user && (
         <Link href="/opinion/new">
-          <a>
-            <Stack alignItems="center">
-              <IconButton color="primary">
-                <AddBoxOutlined />
-              </IconButton>
-              <Typography variant="caption" fontWeight={600} color="#00D066">
-                Dodaj opinie
-              </Typography>
-            </Stack>
-          </a>
+          <Stack alignItems="center">
+            <IconButton color="primary">
+              <AddBoxOutlined />
+            </IconButton>
+            <Typography variant="caption" fontWeight={600} color="#00D066">
+              Dodaj opinie
+            </Typography>
+          </Stack>
         </Link>
       )}
       <Divider orientation="vertical" flexItem />
       {user ? (
         <Link href="/profile">
-          <a>
-            <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
-          </a>
+          <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
         </Link>
       ) : (
         <Stack spacing={2} direction="row">
@@ -103,15 +95,13 @@ export const Menu: React.FC = () => {
       {!isMobile && (
         <Grid item xs>
           <Link href="/">
-            <a>
-              <Image
-                src="/logo.svg"
-                alt="Obudynku Logo"
-                height="46"
-                width="138"
-                onClick={() => router.push("/")}
-              />
-            </a>
+            <Image
+              src="/logo.svg"
+              alt="Obudynku Logo"
+              height="46"
+              width="138"
+              onClick={() => router.push("/")}
+            />
           </Link>
         </Grid>
       )}
@@ -128,9 +118,7 @@ export const Menu: React.FC = () => {
           >
             <Stack spacing={2} direction="row">
               <Link href="/">
-                <a>
-                  <Button variant="text">Szukaj</Button>
-                </a>
+                <Button variant="text">Szukaj</Button>
               </Link>
               <Button onClick={() => router.push("/ranking")} variant="text">
                 Ranking miast
@@ -146,9 +134,7 @@ export const Menu: React.FC = () => {
             </Stack>
             {user ? (
               <Link href="/profile">
-                <a>
-                  <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
-                </a>
+                <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
               </Link>
             ) : (
               <Stack spacing={2} direction="row">

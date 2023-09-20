@@ -1,8 +1,15 @@
 import { Layout } from "@/components/Layout/Layout";
 
 import styles from "./index.module.scss";
-import { useMediaQuery, Grid, Typography, Stack } from "@mui/material";
+import {
+  useMediaQuery,
+  Grid,
+  Typography,
+  Stack,
+  Pagination
+} from "@mui/material";
 import { theme } from "@/theme";
+import { usePathname, useSearchParams } from "next/navigation";
 import { getLatestOpinions } from "@/hooks/useOpinions";
 import { OpinionCard } from "@/components/Opinion/OpinionCard";
 import { avgRateForOpinion } from "@/utils/opinions";
@@ -10,13 +17,37 @@ import dynamic from "next/dynamic";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { SearchBanner } from "@/components/Form/SearchBanner/SearchBanner";
+import { useState } from "react";
+import { GetServerSideProps } from "next";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
+export const getServerSideProps: GetServerSideProps = async context => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["getLatestOpinions", Number(context.query.page) || 1],
+    queryFn: () => getLatestOpinions(Number(context.query.page) || 1)
+  });
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient)
+    }
+  };
+};
+
 const HomePage = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { data } = useQuery("latestOpinions", () => getLatestOpinions());
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const { data } = useQuery({
+    queryKey: ["getLatestOpinions", page],
+    queryFn: () => getLatestOpinions(page)
+  });
+  console.log(page);
 
   return (
     <Layout>
@@ -28,7 +59,7 @@ const HomePage = () => {
         mt="62px"
         mb="8px"
       >
-        Ostatnio dodane opinie
+        Ostatnio dodane opinie ({data?.itemCount})
       </Typography>
       <Grid
         container
@@ -37,7 +68,7 @@ const HomePage = () => {
       >
         <Grid xs={12} md={6} item={true}>
           <Stack spacing={2}>
-            {data?.map(opinion => (
+            {data?.opinions.map(opinion => (
               <OpinionCard
                 desc={opinion.advice}
                 key={opinion.id}
@@ -50,6 +81,15 @@ const HomePage = () => {
               />
             ))}
           </Stack>
+          <Stack alignItems="center" mt={1}>
+            <Pagination
+              count={data?.pageCount}
+              page={page}
+              onChange={(_ev, value) =>
+                router.push(pathname + "?page=" + value)
+              }
+            />
+          </Stack>
         </Grid>
         {!isMobile && (
           <Grid
@@ -61,7 +101,7 @@ const HomePage = () => {
           >
             <Map
               className={styles.ob__latest_map}
-              data={data?.map(opinion => ({
+              data={data?.opinions.map(opinion => ({
                 id: opinion.id,
                 lat: opinion.building.lat,
                 lon: opinion.building.lon,
@@ -77,15 +117,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-export async function getServerSideProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery("latestOpinions", getLatestOpinions);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient)
-    }
-  };
-}

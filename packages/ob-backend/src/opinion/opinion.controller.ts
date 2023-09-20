@@ -8,6 +8,7 @@ import {
   Delete,
   Param,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AddNewOpinionDTO, EditOpinionDTO } from './opinion.dto';
@@ -30,8 +31,8 @@ export class OpinionController {
   }
 
   @Get('latest')
-  async getLatestUserOpinion() {
-    return this.opinionService.getLatestOpinions();
+  async getLatestUserOpinion(@Query('page') page: number) {
+    return this.opinionService.getLatestOpinions(page || 1);
   }
 
   @Get('statistics')

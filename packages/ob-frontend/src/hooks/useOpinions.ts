@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 import useUserStore from "@/store/useUserStore";
 import { env } from "@/utils";
 
-export const getLatestOpinions = async () => {
-  const { data } = await axios.get<Opinion[]>(
-    `${env("NEXT_PUBLIC_API_URL")}/opinion/latest`
-  );
+export const getLatestOpinions = async (page: number) => {
+  const { data } = await axios.get<{
+    opinions: Opinion[];
+    pageCount: number;
+    itemCount: number;
+  }>(`${env("NEXT_PUBLIC_API_URL")}/opinion/latest?page=${page}`);
   return data;
 };
 
