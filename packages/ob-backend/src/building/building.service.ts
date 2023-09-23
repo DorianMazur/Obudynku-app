@@ -34,9 +34,20 @@ export class BuildingService {
     return new StreamableFile(file);
   }
 
-  async searchBuildings(city: string, search?: string) {
-    const buildings = await this.buildingRepository
-      .createQueryBuilder('building')
+  async searchBuildings(page: number, city?: string, search?: string) {
+    const queryBuilder = this.buildingRepository.createQueryBuilder('building');
+    queryBuilder.where(
+      `${city ? 'building.city = :city' : 'TRUE'} AND ${
+        search ? 'building.address LIKE :search' : 'TRUE'
+      }`,
+      {
+        city,
+        search: `%${search}%`,
+      },
+    );
+    queryBuilder.skip((page - 1) * 5).take(5);
+    const itemCount = await queryBuilder.getCount();
+    const buildings = await queryBuilder
       .addSelect([
         'opinion.safety',
         'opinion.construction',
@@ -44,20 +55,10 @@ export class BuildingService {
         'opinion.localization',
       ])
       .leftJoin('building.opinions', 'opinion')
-      .where(
-        `building.city = :city AND ${
-          search ? 'building.address like :search' : 'TRUE'
-        }`,
-        {
-          city,
-          search: `%${search}%`,
-        },
-      )
       .andWhere('opinion.status = :status', { status: 'APPROVED' })
-      .limit(20)
       .getMany();
 
-    return buildings;
+    return { buildings, itemCount, pageCount: Math.ceil(itemCount / 5) };
   }
 
   async checkIfExist(city: string, address: string) {

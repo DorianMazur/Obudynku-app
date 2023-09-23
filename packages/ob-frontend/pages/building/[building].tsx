@@ -55,7 +55,7 @@ const Building = () => {
           />
         )}
         <Stack className={styles.ob__building_title} spacing={1}>
-          <Typography variant="h4" fontWeight="700">
+          <Typography variant="h4" fontWeight="700" textAlign="center">
             {data.address}
           </Typography>
           <Typography

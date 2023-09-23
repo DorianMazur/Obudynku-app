@@ -44,28 +44,6 @@ export class OpinionService {
     return opinions;
   }
 
-  async getLatestOpinions(page: number) {
-    const queryBuilder = this.opinionRepository.createQueryBuilder('opinion');
-    queryBuilder
-      .orderBy('opinion.created_date', 'DESC')
-      .skip((page - 1) * 5)
-      .take(5);
-    const itemCount = await queryBuilder.getCount();
-    const opinions = await queryBuilder
-      .addSelect([
-        'building.id',
-        'building.city',
-        'building.address',
-        'building.lat',
-        'building.lon',
-      ])
-      .leftJoin('opinion.building', 'building')
-      .where('opinion.status = :status', { status: 'APPROVED' })
-      .orderBy('opinion.created_date', 'DESC')
-      .getMany();
-    return { opinions, itemCount, pageCount: Math.ceil(itemCount / 5) };
-  }
-
   async getOpinionStatistics() {
     const statistics = await this.opinionRepository
       .createQueryBuilder('opinion')

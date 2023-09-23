@@ -1,5 +1,5 @@
 {
-  "name": "ob-frontend",
+  "name": "obudynku-app",
   "version": "0.0.0",
   "private": true,
   "license": "GPL-3.0",
@@ -8,6 +8,7 @@
   ],
   "author": "Dorian Mazur <mazur.dorian15@gmail.com>",
   "scripts": {
+    "stard:dev:all": "nx run-many --target=start:dev",
     "start:dev:frontend": "yarn workspace ob-frontend start:dev",
     "start:dev:backend": "yarn workspace ob-backend start:dev",
     "build:backend": "yarn workspace ob-backend build",
@@ -21,7 +22,9 @@
     "eslint-config-prettier": "9.0.0",
     "eslint-import-resolver-typescript": "3.6.0",
     "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-unused-imports": "3.0.0",
     "prettier": "^2.6.2",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "nx": "16.9.0"
   }
 }

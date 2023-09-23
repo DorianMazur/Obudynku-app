@@ -37,20 +37,20 @@ function MyApp({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Hydrate state={pageProps.dehydratedState}>
           <DefaultSeo
-            title="Obudynku"
-            description="Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć."
+            title="Obudynku - Opinie o Budynkach i Mieszkaniach w Polsce"
+            description="Odkryj szczegółowe opinie o budynkach i mieszkaniach w Polsce. Znajdź idealne mieszkanie dla siebie, uwzględniając ważne informacje i recenzje dostępne na Obudynku.pl."
             canonical="https://www.obudynku.pl/"
             openGraph={{
               url: "https://www.obudynku.pl/",
-              title: "Obudynku",
+              title: "Obudynku - Opinie o Budynkach i Mieszkaniach w Polsce",
               description:
-                "Sprawdź opinie o budynku i mieszkaniach. Kiedy szukasz mieszkania dla siebie, musisz wziąć pod uwagę informacje które możesz tutaj znaleźć.",
+                "Odkryj szczegółowe opinie o budynkach i mieszkaniach w Polsce. Znajdź idealne mieszkanie dla siebie, uwzględniając ważne informacje i recenzje dostępne na Obudynku.pl.",
               images: [
                 {
                   url: "/og-image.png",
                   width: 1086,
                   height: 440,
-                  alt: "Obudynku"
+                  alt: "Banner Obudynku.pl"
                 }
               ]
             }}

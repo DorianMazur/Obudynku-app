@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Header, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { SearchBuildingsDTO } from './building.dto';
 import { BuildingService } from './building.service';
 
@@ -17,8 +25,15 @@ export class BuildingController {
     return this.buildingService.getBuildingImage(id);
   }
 
-  @Post('search')
-  async searchBuildings(@Body() data: SearchBuildingsDTO) {
-    return this.buildingService.searchBuildings(data.city, data.search);
+  @Get('search')
+  async searchBuildings(
+    @Query('page') page: number,
+    @Query('city') city: string,
+    @Query('address') address: string,
+  ) {
+    return this.buildingService.searchBuildings(page, city, address);
   }
 }
+
+export type SearchBuildings = ReturnType<BuildingService['searchBuildings']>;
+export type GetBuilding = ReturnType<BuildingService['getBuilding']>;

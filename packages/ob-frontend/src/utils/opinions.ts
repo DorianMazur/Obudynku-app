@@ -1,8 +1,7 @@
-import { Opinion, OpinionIndexes } from "@/types/Opinion";
+import { OpinionIndexes } from "@/types/Opinion";
+import { OpinionEntity } from "ob-backend";
 
-export const avgRateForOpinions = (
-  opinions: Array<Opinion | Omit<Opinion, "building">>
-) => {
+export const avgRateForOpinions = (opinions: Array<OpinionEntity>) => {
   const radarChart: Record<OpinionIndexes, number | string> = opinions.reduce(
     (prev, curr) => {
       prev.acustic += curr.acustic;
@@ -40,7 +39,7 @@ export const avgRateForOpinion = (
     Object.keys(pickedKeys).reduce((prev, key) => {
       const _key = key as keyof typeof rates;
       return Number(rates[_key]) + Number(prev);
-    }, 0) / 5
+    }, 0) / 4
   ).toFixed(1);
 };
 

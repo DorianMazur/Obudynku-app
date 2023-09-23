@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./Menu.module.scss";
 
 import {
   ListAltOutlined,
   PeopleOutlined,
-  Search,
-  AddBoxOutlined
+  AddBoxOutlined,
+  Reviews,
+  ReviewsOutlined
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -32,10 +33,10 @@ const MobileMenu: React.FC = () => {
       <Link href="/">
         <Stack>
           <IconButton>
-            <Search />
+            <ReviewsOutlined />
           </IconButton>
           <Typography variant="caption" fontWeight={600} color="#8083a3">
-            Szukaj
+            Opinie
           </Typography>
         </Stack>
       </Link>
@@ -118,7 +119,7 @@ export const Menu: React.FC = () => {
           >
             <Stack spacing={2} direction="row">
               <Link href="/">
-                <Button variant="text">Szukaj</Button>
+                <Button variant="text">Opinie</Button>
               </Link>
               <Button onClick={() => router.push("/ranking")} variant="text">
                 Ranking miast

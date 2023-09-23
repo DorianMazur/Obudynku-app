@@ -5,15 +5,6 @@ import { useState, useEffect } from "react";
 import useUserStore from "@/store/useUserStore";
 import { env } from "@/utils";
 
-export const getLatestOpinions = async (page: number) => {
-  const { data } = await axios.get<{
-    opinions: Opinion[];
-    pageCount: number;
-    itemCount: number;
-  }>(`${env("NEXT_PUBLIC_API_URL")}/opinion/latest?page=${page}`);
-  return data;
-};
-
 export const getMyOpinions = async (token?: string) => {
   const response = await axios.get<Opinion[]>(
     `${env("NEXT_PUBLIC_API_URL")}/opinion/my`,
@@ -97,7 +88,6 @@ export const useOpinion = () => {
     setNewOpinionLocation,
     setNewOpinionRate,
     setNewOpinionSummary,
-    getLatestOpinions,
     clearNewOpinion,
     getOpinionStatistics,
     getMyOpinions: () => getMyOpinions(user?.token),

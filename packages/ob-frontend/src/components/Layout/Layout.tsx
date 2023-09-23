@@ -27,7 +27,7 @@ export const Layout: React.FC<{
       </Container>
       <Grid
         container
-        justifyContent="space-around"
+        justifyContent="center"
         alignItems="center"
         style={{ padding: "20px 0", fontSize: 12 }}
       >
@@ -37,6 +37,7 @@ export const Layout: React.FC<{
           spacing={2}
           justifyContent="flex-end"
           alignItems="center"
+          textAlign="center"
         >
           <div>{new Date().getFullYear()} © Obudynku.pl</div>
           <Stack spacing={2} direction="row" alignItems="center">

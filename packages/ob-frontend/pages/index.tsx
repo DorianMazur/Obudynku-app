@@ -6,28 +6,50 @@ import {
   Grid,
   Typography,
   Stack,
-  Pagination
+  Pagination,
+  Autocomplete,
+  TextField,
+  styled,
+  Button
 } from "@mui/material";
 import { theme } from "@/theme";
 import { usePathname, useSearchParams } from "next/navigation";
-import { getLatestOpinions } from "@/hooks/useOpinions";
 import { OpinionCard } from "@/components/Opinion/OpinionCard";
 import { avgRateForOpinion } from "@/utils/opinions";
 import dynamic from "next/dynamic";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { useRouter } from "next/router";
-import { SearchBanner } from "@/components/Form/SearchBanner/SearchBanner";
-import { useState } from "react";
+import { HomeBanner } from "@/components/HomeBanner/HomeBanner";
 import { GetServerSideProps } from "next";
+import { CITIES } from "@/const/city";
+import { searchBuildings } from "@/hooks/useBuildings";
+import { useFormik } from "formik";
+
+const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    ".MuiTextField-root": {
+      width: "100%"
+    },
+    ".MuiAutocomplete-root": {
+      width: "100%"
+    },
+    ".MuiButton-root": {
+      width: "100%"
+    }
+  }
+}));
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const queryClient = new QueryClient();
+  const page = Number(context.query.page) || 1;
+  const city = (context.query.city || undefined) as string | undefined;
+  const address = (context.query.address || undefined) as string | undefined;
 
   await queryClient.prefetchQuery({
-    queryKey: ["getLatestOpinions", Number(context.query.page) || 1],
-    queryFn: () => getLatestOpinions(Number(context.query.page) || 1)
+    queryKey: ["searchBuildings", page, city, address],
+    queryFn: () => searchBuildings(page, city, address)
   });
 
   return {
@@ -43,51 +65,105 @@ const HomePage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const searchParams = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
-  const { data } = useQuery({
-    queryKey: ["getLatestOpinions", page],
-    queryFn: () => getLatestOpinions(page)
+  const city = searchParams.get("city") || undefined;
+  const address = searchParams.get("address") || undefined;
+
+  const formik = useFormik({
+    initialValues: {
+      city,
+      address
+    },
+    onSubmit: props => {
+      const newSearchParams = new URLSearchParams();
+      newSearchParams.set("page", String(page));
+      props.city && newSearchParams.set("city", props.city);
+      props.address && newSearchParams.set("address", props.address);
+      router.push(pathname + "?" + newSearchParams.toString());
+    }
   });
-  console.log(page);
+
+  const { data } = useQuery({
+    queryKey: ["searchBuildings", page, city, address],
+    queryFn: () => searchBuildings(page, city, address)
+  });
 
   return (
     <Layout>
-      <SearchBanner onChange={value => router.push(`/search?city=${value}`)} />
-      <Typography
-        variant="subtitle2"
-        component="div"
-        className={styles.ob__latest_title}
-        mt="62px"
-        mb="8px"
+      <HomeBanner />
+      <StyledGrid
+        container
+        flexDirection="row"
+        mb={4}
+        justifyContent="center"
+        gap={1}
       >
-        Ostatnio dodane opinie ({data?.itemCount})
-      </Typography>
+        <TextField
+          name="address"
+          label="Adres lub nazwa ulicy"
+          size="small"
+          value={formik.values.address}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        <Autocomplete
+          disablePortal
+          defaultValue={city ? { label: city, value: city } : undefined}
+          onChange={(_, e) => formik.handleChange("city")(e?.value || "")}
+          onBlur={formik.handleBlur("city")}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          options={Object.keys(CITIES).map(city => ({
+            label: city,
+            value: city
+          }))}
+          sx={{ width: 200 }}
+          renderInput={params => (
+            <TextField {...params} label="Miasto" size="small" />
+          )}
+        />
+        <Button
+          variant="contained"
+          size="medium"
+          onClick={() => {
+            formik.submitForm();
+          }}
+        >
+          Szukaj
+        </Button>
+      </StyledGrid>
       <Grid
         container
         flexDirection={isMobile ? "column-reverse" : "row"}
-        className={styles.ob__latest}
+        className={styles.ob__index}
       >
         <Grid xs={12} md={6} item={true}>
+          <Typography variant="subtitle2" component="div" ml={1} mb={1}>
+            Budynki ({data?.itemCount})
+          </Typography>
           <Stack spacing={2}>
-            {data?.opinions.map(opinion => (
+            {data?.buildings.map(building => (
               <OpinionCard
-                desc={opinion.advice}
-                key={opinion.id}
-                title={opinion.building.address}
-                subtitle={opinion.building.city}
-                rate={avgRateForOpinion(opinion)}
-                titleOnClick={() =>
-                  router.push(`/building/${opinion.building.id}`)
-                }
+                desc={building.opinions[0].advice}
+                key={building.id}
+                title={building.address}
+                subtitle={building.city}
+                rate={avgRateForOpinion(building.opinions[0])}
+                titleOnClick={() => router.push(`/building/${building.id}`)}
               />
             ))}
           </Stack>
-          <Stack alignItems="center" mt={1}>
+          <Stack alignItems="center" mt={2}>
             <Pagination
               count={data?.pageCount}
+              hideNextButton={isMobile}
+              hidePrevButton={isMobile}
               page={page}
-              onChange={(_ev, value) =>
-                router.push(pathname + "?page=" + value)
-              }
+              onChange={(_ev, value) => {
+                const newSearchParams = new URLSearchParams();
+                newSearchParams.set("page", String(value));
+                city && newSearchParams.set("city", city);
+                address && newSearchParams.set("address", address);
+                router.push(pathname + "?" + newSearchParams.toString());
+              }}
             />
           </Stack>
         </Grid>
@@ -100,13 +176,13 @@ const HomePage = () => {
             mb={isMobile ? "8px" : "0px"}
           >
             <Map
-              className={styles.ob__latest_map}
-              data={data?.opinions.map(opinion => ({
-                id: opinion.id,
-                lat: opinion.building.lat,
-                lon: opinion.building.lon,
-                rate: avgRateForOpinion(opinion),
-                building_id: opinion.building.id
+              className={styles.ob__index_map}
+              data={data?.buildings.map(building => ({
+                id: building.id,
+                lat: building.lat,
+                lon: building.lon,
+                rate: avgRateForOpinion(building.opinions[0]),
+                building_id: building.id
               }))}
             />
           </Grid>

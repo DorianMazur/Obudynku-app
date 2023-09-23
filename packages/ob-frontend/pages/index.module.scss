@@ -1,8 +1,14 @@
-.ob__latest {
+.ob__index {
+  min-height: 400px;
   &_title {
     color: #8083a3;
   }
   &_map {
     min-height: 300px;
+  }
+  &_search {
+    &.MuiTextField-root {
+      width: 100%;
+    }
   }
 }
