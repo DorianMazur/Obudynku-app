@@ -29,6 +29,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/packages/ob-frontend/.next/static
 # These are partially installed for some reason. Remove or it won't work.
 RUN rm -rf ./packages/ob-frontend/node_modules/react
 RUN rm -rf ./packages/ob-frontend/node_modules/next
+RUN touch /app/packages/ob-frontend/.env
 
 WORKDIR /app/packages/ob-frontend/
 
