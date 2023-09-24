@@ -42,7 +42,6 @@ echo -e "env.sh loaded\n"
 # Config
 ENVSH_ENV="${ENVSH_ENV:-"./.env"}"
 ENVSH_PREFIX="${ENVSH_PREFIX:-"NEXT_PUBLIC_"}"
-ENVSH_PREFIX_STRIP="${ENVSH_PREFIX_STRIP:-false}"
 
 # Can be `window.__env = {` or `const ENV = {` or whatever you want
 ENVSH_PREPEND="${ENVSH_PREPEND:-"window.__env = {"}"
@@ -67,7 +66,7 @@ __info() {
 }
 
 __debug() {
-  ENVSH_VERBOSE="${ENVSH_VERBOSE:-"false"}"
+  ENVSH_VERBOSE="${ENVSH_VERBOSE:-"true"}"
   if [ "$ENVSH_VERBOSE" == "true" ]; then
     printf "ENVSH_VERBOSE: %s\n" "$1"
   fi
@@ -128,8 +127,6 @@ do
 done < "$ENVSH_ENV"
 echo "$ENVSH_APPEND" >> "$ENVSH_OUTPUT"
 
-# Strip prefix if needed
-$ENVSH_PREFIX_STRIP && $ENVSH_SED -i'' -e "s~$ENVSH_PREFIX~~g" "$ENVSH_OUTPUT"
 
 # Update .env file itself
 # NOTE: This step is not necessary because variables on pages inside the
