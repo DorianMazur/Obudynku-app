@@ -21,7 +21,7 @@ jobs:
       - name: Cache Yarn cache.
         uses: c-hive/gha-yarn-cache@v2
       - name: Install project dependencies.
-        run: yarn --prefer-offline  --frozen-lockfile
+        run: yarn --prefer-offline --frozen-lockfile
       - name: Run Tests.
         env:
           ENVIRONMENT: test
@@ -52,6 +52,7 @@ jobs:
         with:
           push: true
           context: .
+          provenance: false
           file: ./packages/ob-frontend/Dockerfile
           platforms: ${{ matrix.platform }}
           buildkitd-flags: "--debug"

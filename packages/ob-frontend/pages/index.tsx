@@ -126,7 +126,7 @@ const HomePage = () => {
     },
     onSubmit: props => {
       const newSearchParams = new URLSearchParams();
-      newSearchParams.set("page", String(page));
+      newSearchParams.set("page", String(1));
       props.city && newSearchParams.set("city", props.city);
       props.address && newSearchParams.set("address", props.address);
       router.push(pathname + "?" + newSearchParams.toString());
