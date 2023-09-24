@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import {
   Button,
   Grid,
@@ -7,7 +6,6 @@ import {
   TextField,
   Stack,
   Tabs,
-  Input,
   Tab
 } from "@mui/material";
 import { useState } from "react";

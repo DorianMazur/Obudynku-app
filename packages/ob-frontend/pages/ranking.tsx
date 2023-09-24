@@ -14,13 +14,9 @@ import {
 } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
-import { useRouter } from "next/router";
-import { useBuilding, getBuilding } from "@/hooks/useBuildings";
 import { NextSeo } from "next-seo";
-import { OpinionRateBubble } from "@/components/Opinion/OpinionRateBubble";
 import { RATES_KEYS } from "@/const/rates";
-import { OpinionCard } from "@/components/Opinion/OpinionCard";
-import { getOpinionStatistics, useOpinion } from "@/hooks/useOpinions";
+import { getOpinionStatistics } from "@/hooks/useOpinions";
 import { useState } from "react";
 import { visuallyHidden } from "@mui/utils";
 import { colorByAvg } from "@/utils/opinions";
@@ -30,12 +26,11 @@ type Order = "asc" | "desc";
 const Ranking = () => {
   const [order, setOrder] = useState<Order>("asc");
   const [orderKey, setOrderKey] = useState("localization");
-  const createSortHandler =
-    (property: any) => (event: React.MouseEvent<unknown>) => {
-      const isAsc = orderKey === property && order === "asc";
-      setOrder(isAsc ? "desc" : "asc");
-      setOrderKey(property);
-    };
+  const createSortHandler = (property: any) => () => {
+    const isAsc = orderKey === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderKey(property);
+  };
   const { data } = useQuery("getOpinionStatistics", () =>
     getOpinionStatistics()
   );
@@ -108,7 +103,7 @@ const Ranking = () => {
 
 export default Ranking;
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery("getOpinionStatistics", () =>
     getOpinionStatistics()

@@ -6,7 +6,6 @@ import {
   ListAltOutlined,
   PeopleOutlined,
   AddBoxOutlined,
-  Reviews,
   ReviewsOutlined
 } from "@mui/icons-material";
 import { useRouter } from "next/router";

@@ -4,8 +4,6 @@ import { Button, CircularProgress, Typography } from "@mui/material";
 import { OpenStreetMapAddress } from "@/types/Location";
 import { getLocation } from "@/hooks/useLocation";
 import { useMutation } from "react-query";
-import { useState } from "react";
-import { useOpinion } from "@/hooks/useOpinions";
 
 const Map = dynamic(() => import("@/components/Map/Map"), { ssr: false });
 
@@ -20,7 +18,7 @@ export const NewOpinionLocationForm: React.FC<NewOpinionLocationFormProps> = ({
   location,
   setLocation
 }) => {
-  const { mutate, isLoading } = useMutation("getLocations", getLocation, {
+  const { isLoading } = useMutation("getLocations", getLocation, {
     onSuccess: data => {
       setLocation(data);
     }
@@ -41,10 +39,6 @@ export const NewOpinionLocationForm: React.FC<NewOpinionLocationFormProps> = ({
         selected={
           location ? { lat: location?.lat, lng: location?.lon } : undefined
         }
-        onSelect={({ lat, lng }) => {
-          setLocation(null);
-          mutate({ lat, lon: lng });
-        }}
       />
       {isLoading ? (
         <CircularProgress />

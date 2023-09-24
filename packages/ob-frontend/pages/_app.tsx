@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme";
-import React, { useEffect } from "react";
+import React from "react";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Hydrate } from "react-query/hydration";

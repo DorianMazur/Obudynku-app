@@ -37,5 +37,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-
 **/public/__env.js
+
+# Turbo
+.turbo

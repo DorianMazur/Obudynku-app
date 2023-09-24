@@ -7,7 +7,7 @@ export interface UseAuthStore {
   setRegisterToken(registerToken: string | undefined): void;
 }
 
-export const useAuthStore = create<UseAuthStore>((set, get) => ({
+export const useAuthStore = create<UseAuthStore>(set => ({
   registrationEmail: undefined,
   registerToken: undefined,
   setRegistrationEmail: registrationEmail => {

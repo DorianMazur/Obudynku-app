@@ -13,7 +13,7 @@ export interface UseUserStore {
 
 export const useUserStore = create(
   persist<UseUserStore>(
-    (set, get) => ({
+    set => ({
       user: undefined,
       setUser: user => {
         set(() => ({

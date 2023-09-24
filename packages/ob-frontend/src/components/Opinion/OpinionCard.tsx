@@ -1,7 +1,7 @@
 import { RATES_KEYS } from "@/const/rates";
 import { OpinionIndexes } from "@/types/Opinion";
 import { labelByAvg } from "@/utils/opinions";
-import { Card, Typography, CardProps, Grid, Chip } from "@mui/material";
+import { Card, Typography, CardProps, Grid } from "@mui/material";
 import React from "react";
 import styles from "./OpinionCard.module.scss";
 import { OpinionRateBubble } from "./OpinionRateBubble";

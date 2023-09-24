@@ -5,7 +5,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"]
-    }
+    },
+    "experimentalDecorators": true,
+    "strict": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

@@ -27,7 +27,7 @@ export interface RequestEmailCodeProps {
 }
 
 export const requestEmailCode = async (props: RequestEmailCodeProps) => {
-  const response = await axios.post<void>(
+  await axios.post<void>(
     `${env("NEXT_PUBLIC_API_URL")}/auth/register/email`,
     props
   );

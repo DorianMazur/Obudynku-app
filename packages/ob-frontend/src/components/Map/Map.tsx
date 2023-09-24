@@ -79,9 +79,7 @@ const MapPositioner: React.FC<IMapPositionerProps> = ({ data, selected }) => {
           icon={MapIconWithoutRate()}
         />
       )}
-      {data?.map(item => (
-        <Icon key={item.id} item={item} />
-      ))}
+      {data?.map(item => <Icon key={item.id} item={item} />)}
     </div>
   );
 };
@@ -94,7 +92,6 @@ export interface MapProps extends MapContainerProps {
 }
 
 export const Map: React.FC<MapProps> = ({
-  children,
   className,
   data,
   selected,

@@ -1,0 +1,14 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "pipeline": {
+      "start:dev": {
+        "dependsOn": [],
+        "outputs": ["./pacakges/ob-frontend/.next/**", "./pacakges/ob-backend/dist/**"]
+      },
+      "lint": {},
+      "dev": {
+        "cache": false,
+        "persistent": true
+      }
+    }
+  }

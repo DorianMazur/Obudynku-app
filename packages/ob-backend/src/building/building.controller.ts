@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Header,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
-import { SearchBuildingsDTO } from './building.dto';
+import { Controller, Get, Header, Param, Query } from '@nestjs/common';
 import { BuildingService } from './building.service';
 
 @Controller('building')
@@ -15,13 +6,13 @@ export class BuildingController {
   constructor(private buildingService: BuildingService) {}
 
   @Get(':id')
-  async getBuilding(@Param('id') id) {
+  async getBuilding(@Param('id') id: string) {
     return this.buildingService.getBuilding(id);
   }
 
   @Get(':id/image')
   @Header('content-type', 'image/jpeg')
-  async getBuildingImage(@Param('id') id) {
+  async getBuildingImage(@Param('id') id: string) {
     return this.buildingService.getBuildingImage(id);
   }
 

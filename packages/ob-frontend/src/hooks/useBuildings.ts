@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { Building } from "@/types/Building";
 import { env } from "@/utils";
 import { GetBuilding, SearchBuildings } from "ob-backend";
 

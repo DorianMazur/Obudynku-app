@@ -16,7 +16,7 @@ export const Rules = () => {
             internetowego dostępnego pod adresem Obudynku.pl.
           </p>
           <p>
-            1.2. Administratorem serwisu jest firma Obudynku.pl z siedzibą w
+            1.2. Administratorem serwisu jest serwis Obudynku.pl z siedzibą w
             Polsce.
           </p>
         </li>

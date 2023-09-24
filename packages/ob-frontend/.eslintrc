@@ -1,5 +1,5 @@
 {
-  "extends": ["../../.eslintrc", "next", "next/core-web-vitals"],
+  "extends": ["next", "next/core-web-vitals", "../../.eslintrc"],
   "rules": {
     "react-hooks/exhaustive-deps": "off"
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "@mui/material/Container";
 import { Menu } from "@/components/Navigation/Menu";
-import { Button, Divider, Grid, Link, Stack } from "@mui/material";
+import { Divider, Grid, Link, Stack } from "@mui/material";
 
 export const Layout: React.FC<{
   children?: React.ReactNode;
