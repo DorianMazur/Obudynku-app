@@ -8,7 +8,6 @@ import {
   Delete,
   Param,
   HttpCode,
-  Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AddNewOpinionDTO, EditOpinionDTO } from './opinion.dto';

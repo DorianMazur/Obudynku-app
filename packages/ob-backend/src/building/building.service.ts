@@ -36,26 +36,22 @@ export class BuildingService {
 
   async searchBuildings(page: number, city?: string, search?: string) {
     const queryBuilder = this.buildingRepository.createQueryBuilder('building');
-    queryBuilder.where(
-      `${city ? 'building.city = :city' : 'TRUE'} AND ${
-        search ? 'building.address LIKE :search' : 'TRUE'
-      }`,
-      {
-        city,
-        search: `%${search}%`,
-      },
-    );
-    queryBuilder.skip((page - 1) * 5).take(5);
+    queryBuilder
+      .where(
+        `${city ? 'building.city = :city' : 'TRUE'} AND ${
+          search ? 'building.address LIKE :search' : 'TRUE'
+        }`,
+        {
+          city,
+          search: `%${search}%`,
+        },
+      )
+      .leftJoinAndSelect('building.opinions', 'opinion')
+      .andWhere('opinion.status = :status', { status: 'APPROVED' });
     const itemCount = await queryBuilder.getCount();
     const buildings = await queryBuilder
-      .addSelect([
-        'opinion.safety',
-        'opinion.construction',
-        'opinion.acustic',
-        'opinion.localization',
-      ])
-      .leftJoin('building.opinions', 'opinion')
-      .andWhere('opinion.status = :status', { status: 'APPROVED' })
+      .skip((page - 1) * 5)
+      .take(5)
       .getMany();
 
     return { buildings, itemCount, pageCount: Math.ceil(itemCount / 5) };
