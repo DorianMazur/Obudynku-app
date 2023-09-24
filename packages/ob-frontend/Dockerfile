@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN touch ./packages/ob-frontend/.env
+RUN touch /app/packages/ob-frontend/.env
 RUN yarn install --network-timeout 100000 --frozen-lockfile 
 RUN yarn build:frontend
 # add .env file
