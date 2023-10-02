@@ -1,17 +1,9 @@
 import axios from "axios";
 import { OpenStreetMapAddress } from "@/types/Location";
-import { CITIES } from "@/const/city";
 
-interface GetLocationProps {
-  lat: string | number;
-  lon: string | number;
-}
-
-export const getLocation = async ({ lon, lat }: GetLocationProps) => {
-  const { data } = await axios.get<OpenStreetMapAddress>(
-    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+export const fetchAddress = async (address: string) => {
+  const response = await axios.get<Array<OpenStreetMapAddress>>(
+    `https://nominatim.openstreetmap.org/search?q=${address}&format=json&polygon=1&addressdetails=1`
   );
-  const cities = Object.keys(CITIES);
-  if (!cities.includes(data.address.county)) return null;
-  return data.address.house_number ? data : null;
+  return response.data.slice(0, 5);
 };

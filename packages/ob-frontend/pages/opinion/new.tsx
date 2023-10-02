@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { SnackbarContext } from "@/context/SnackbarContext";
 import { useOpinion } from "@/hooks/useOpinions";
 import { useMutation } from "react-query";
+import { AuthenticatedRoute } from "@/components/Navigation/AuthenticatedRoute";
 
 enum OpinionSteps {
   Location = "OPINION_LOCATION",
@@ -49,74 +50,80 @@ const NewOpinion = () => {
   };
 
   return (
-    <>
-      <Layout centered>
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            {step === OpinionSteps.Location && (
-              <NewOpinionLocationForm
-                onNext={() => setStep(OpinionSteps.Rates)}
-                location={newOpinionLocation}
-                setLocation={setNewOpinionLocation}
-              />
-            )}
-            {step === OpinionSteps.Rates && (
-              <NewOpinionRatesForm
-                onBack={() => setStep(OpinionSteps.Location)}
-                onNext={() => setStep(OpinionSteps.Summary)}
-                opinions={newOpinionRates}
-                setOpinion={setNewOpinionRate}
-              />
-            )}
-            {step === OpinionSteps.Summary && (
-              <NewOpinionSummaryForm
-                onBack={() => setStep(OpinionSteps.Rates)}
-                summary={newOpinionSummary}
-                setSummary={setNewOpinionSummary}
-                nextLabel="Dodaj opinie"
-                onNext={() =>
-                  newOpinionLocation &&
-                  newOpinionRates &&
-                  newOpinionSummary &&
-                  mutate({
-                    lat: Number(newOpinionLocation.lat),
-                    lon: Number(newOpinionLocation.lon),
-                    city: newOpinionLocation.address.county,
-                    address: `${newOpinionLocation.address.road} ${newOpinionLocation.address.house_number}`,
-                    advice: newOpinionSummary,
-                    /* @ts-ignore */
-                    rates: Object.fromEntries(
-                      Object.entries(newOpinionRates).map(([o_key, o_val]) => {
-                        return [o_key, o_val.rate];
-                      })
-                    ),
-                    /* @ts-ignore */
-                    opinions: Object.fromEntries(
-                      Object.entries(newOpinionRates).map(([o_key, o_val]) => {
-                        return [o_key, o_val.desc];
-                      })
-                    )
-                  })
-                }
-              />
-            )}
-          </>
-        )}
-      </Layout>
-      <LinearProgress
-        variant="determinate"
-        value={progressByStep(step)}
-        sx={{
-          position: "absolute",
-          bottom: 0,
-          zIndex: 999,
-          width: "100vw",
-          height: 6
-        }}
-      />
-    </>
+    <AuthenticatedRoute redirectTo={router.route}>
+      <>
+        <Layout centered>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <>
+              {step === OpinionSteps.Location && (
+                <NewOpinionLocationForm
+                  onNext={() => setStep(OpinionSteps.Rates)}
+                  location={newOpinionLocation}
+                  setLocation={setNewOpinionLocation}
+                />
+              )}
+              {step === OpinionSteps.Rates && (
+                <NewOpinionRatesForm
+                  onBack={() => setStep(OpinionSteps.Location)}
+                  onNext={() => setStep(OpinionSteps.Summary)}
+                  opinions={newOpinionRates}
+                  setOpinion={setNewOpinionRate}
+                />
+              )}
+              {step === OpinionSteps.Summary && (
+                <NewOpinionSummaryForm
+                  onBack={() => setStep(OpinionSteps.Rates)}
+                  summary={newOpinionSummary}
+                  setSummary={setNewOpinionSummary}
+                  nextLabel="Dodaj opinie"
+                  onNext={() =>
+                    newOpinionLocation &&
+                    newOpinionRates &&
+                    newOpinionSummary &&
+                    mutate({
+                      lat: Number(newOpinionLocation.lat),
+                      lon: Number(newOpinionLocation.lon),
+                      city: newOpinionLocation.address.city,
+                      address: `${newOpinionLocation.address.road} ${newOpinionLocation.address.house_number}`,
+                      advice: newOpinionSummary,
+                      /* @ts-ignore */
+                      rates: Object.fromEntries(
+                        Object.entries(newOpinionRates).map(
+                          ([o_key, o_val]) => {
+                            return [o_key, o_val.rate || 0];
+                          }
+                        )
+                      ),
+                      /* @ts-ignore */
+                      opinions: Object.fromEntries(
+                        Object.entries(newOpinionRates).map(
+                          ([o_key, o_val]) => {
+                            return [o_key, o_val.desc];
+                          }
+                        )
+                      )
+                    })
+                  }
+                />
+              )}
+            </>
+          )}
+        </Layout>
+        <LinearProgress
+          variant="determinate"
+          value={progressByStep(step)}
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            zIndex: 999,
+            width: "100vw",
+            height: 6
+          }}
+        />
+      </>
+    </AuthenticatedRoute>
   );
 };
 

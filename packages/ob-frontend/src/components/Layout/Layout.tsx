@@ -14,13 +14,17 @@ export const Layout: React.FC<{
         sx={
           centered
             ? {
-                display: "grid",
+                display: "flex",
                 justifyContent: "center",
+                flexDirection: "column",
                 alignContent: "center",
-                height: "calc(100vh - 106px)",
+                height: "calc(100vh - 170px)",
                 padding: "0px !important"
               }
-            : { padding: "0px 0px 20px 0px !important" }
+            : {
+                padding: "0px 0px 20px 0px !important",
+                minHeight: "calc(100vh - 170px)"
+              }
         }
       >
         {children}
@@ -34,13 +38,13 @@ export const Layout: React.FC<{
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" flexItem />}
-          spacing={2}
+          spacing={1}
           justifyContent="flex-end"
           alignItems="center"
           textAlign="center"
         >
           <div>{new Date().getFullYear()} © Obudynku.pl</div>
-          <Stack spacing={2} direction="row" alignItems="center">
+          <Stack spacing={1} direction="row" alignItems="center">
             <Link href="/privacy">Polityka prywatności</Link>
             <Link href="/rules">Regulamin</Link>
           </Stack>

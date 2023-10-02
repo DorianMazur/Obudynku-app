@@ -31,13 +31,13 @@ import { useState } from "react";
 const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     ".MuiTextField-root": {
-      width: "100%"
+      width: "250px"
     },
     ".MuiAutocomplete-root": {
-      width: "100%"
+      width: "250px"
     },
     ".MuiButton-root": {
-      width: "100%"
+      width: "250px"
     }
   }
 }));
@@ -185,7 +185,8 @@ const HomePage = () => {
       </StyledGrid>
       <Grid
         container
-        flexDirection={isMobile ? "column-reverse" : "row"}
+        flexDirection={isMobile ? "column" : "row"}
+        justifyContent="flex-start"
         className={styles.ob__index}
       >
         <Grid xs={12} md={6} item={true}>
@@ -208,7 +209,7 @@ const HomePage = () => {
             )}
           </Grid>
           {mode === "list" ? (
-            <Stack spacing={2}>
+            <Stack spacing={1}>
               {data?.buildings.map(building => (
                 <OpinionCard
                   desc={building.opinions[0].advice}

@@ -61,6 +61,16 @@ export const setPassword =
     return response.data;
   };
 
+export const changePassword =
+  (token?: string) => async (newPassword: string) => {
+    const response = await axios.post<{ token: string; email: string }>(
+      `${env("NEXT_PUBLIC_API_URL")}/user/password-change`,
+      { newPassword },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return response.data;
+  };
+
 export const useUser = () => {
   const { user, setUser } = useUserStore();
   const {
@@ -78,11 +88,13 @@ export const useUser = () => {
 
   return {
     setPassword: setPassword(registerToken),
+    changePassword: changePassword(user?.token),
     verifyEmailCode,
     requestEmailCode,
     logIn,
     setUser,
     user: hasHydrated ? user : undefined,
+    hasHydrated,
     registerToken,
     setRegisterToken,
     registrationEmail,

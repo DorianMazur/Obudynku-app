@@ -1,6 +1,6 @@
 {
   "name": "ob-frontend",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Dorian Mazur <mazur.dorian15@gmail.com>",
   "license": "GPL-3.0",
   "scripts": {
@@ -13,7 +13,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "5.14.8",
-    "@mui/material": "^5.8.0",
+    "@mui/material": "5.14.8",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "leaflet": "1.9.4",
@@ -25,7 +25,7 @@
     "react-leaflet": "4.2.1",
     "react-query": "^3.39.0",
     "yup": "^0.32.11",
-    "zustand": "^4.0.0-rc.1"
+    "zustand": "4.4.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

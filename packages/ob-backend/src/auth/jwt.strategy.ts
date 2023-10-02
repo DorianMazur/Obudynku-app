@@ -9,26 +9,9 @@ interface JwtPayload {
 }
 
 @Injectable()
-export class JwtPhoneStrategy extends PassportStrategy(Strategy, 'jwt-phone') {
-  constructor() {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET_KEY,
-    });
-  }
-
-  async validate(payload: JwtPayload) {
-    if (!payload.email || !payload.phone) {
-      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
-    }
-    return payload;
-  }
-}
-
-@Injectable()
 export class JwtEmailStrategy extends PassportStrategy(Strategy, 'jwt-email') {
   constructor() {
+    console.log('aa', process.env.JWT_SECRET_KEY);
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,

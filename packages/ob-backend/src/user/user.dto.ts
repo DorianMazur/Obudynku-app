@@ -4,4 +4,6 @@ export class CreateUserDto {
   password: string;
 }
 
-export default CreateUserDto;
+export class ChangePasswordDto {
+  newPassword: string;
+}

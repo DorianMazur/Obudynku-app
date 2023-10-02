@@ -91,10 +91,11 @@ export interface MapProps extends MapContainerProps {
   selected?: { lat: number; lng: number };
 }
 
-export const Map: React.FC<MapProps> = ({
+export const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   className,
   data,
   selected,
+  children,
   ...rest
 }) => {
   let mapClassName = styles.map;
@@ -110,6 +111,7 @@ export const Map: React.FC<MapProps> = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapPositioner data={data} selected={selected} />
+      {children}
     </MapContainer>
   );
 };

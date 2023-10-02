@@ -3,20 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthEntity } from './auth.entity';
-import { createTransport } from 'nodemailer';
 import { UserService } from '../user/user.service';
 import { compare } from 'bcrypt';
-import { HttpService } from '@nestjs/axios';
-
-const transporter = createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT as unknown as number,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +14,7 @@ export class AuthService {
     private authRepository: Repository<AuthEntity>,
     private jwtService: JwtService,
     private userService: UserService,
-    private httpService: HttpService,
+    private mailerService: MailerService,
   ) {}
 
   generateCode() {
@@ -39,10 +28,9 @@ export class AuthService {
       code: this.generateCode(),
     });
     await this.authRepository.save(auth);
-    await transporter.sendMail({
-      from: '"Obudynku.pl" <no-reply@obudynku.pl>',
+    await this.mailerService.sendMail({
       to: email,
-      subject: 'One Time Password',
+      subject: 'Kod weryfikacyjny',
       html: `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
       <div style="margin:50px auto;width:70%;padding:20px 0">
         <div style="border-bottom:1px solid #eee">
@@ -65,18 +53,6 @@ export class AuthService {
     });
     if (auth) {
       token = this.jwtService.sign({ email });
-    }
-    return { token };
-  }
-
-  async verifyPhoneCode(code: number, phone: string, email: string) {
-    let token;
-    const auth = await this.authRepository.findOne({
-      code,
-      identificator: phone,
-    });
-    if (auth) {
-      token = this.jwtService.sign({ email, phone });
     }
     return { token };
   }

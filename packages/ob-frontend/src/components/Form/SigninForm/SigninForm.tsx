@@ -111,7 +111,7 @@ export const SigninForm: React.FC<SigninFormProps> = ({ onSuccess }) => {
       </form>
       <Divider flexItem>lub</Divider>
       <Button
-        variant="text"
+        variant="outlined"
         size="large"
         fullWidth
         onClick={() => router.push("/signup")}

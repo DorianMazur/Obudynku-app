@@ -1,6 +1,6 @@
 import { OpenStreetMapAddress } from "@/types/Location";
 import { OpinionIndexes } from "@/types/Opinion";
-import create from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface UseOpinionStore {

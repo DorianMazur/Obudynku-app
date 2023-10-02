@@ -10,12 +10,15 @@ import {
 
 @Entity('opinion')
 export class OpinionEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: true,
   })
   flat_number: string;
+
   @Column({
     type: 'simple-json',
     nullable: false,
@@ -70,12 +73,15 @@ export class OpinionEntity {
 
   @Column('datetime')
   created_date!: Date;
-  @BeforeInsert() async insertDate() {
+  @BeforeInsert() async insertCreatedDate() {
     this.created_date = new Date();
   }
 
   @Column('datetime')
   updated_date!: Date;
+  @BeforeInsert() async insertUpdatedDate() {
+    this.updated_date = new Date();
+  }
 
   @ManyToOne(() => BuildingEntity, (building) => building.opinions)
   building: BuildingEntity;

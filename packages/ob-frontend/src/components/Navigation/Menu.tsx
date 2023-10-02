@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import styles from "./Menu.module.scss";
 
-import {
-  ListAltOutlined,
-  PeopleOutlined,
-  AddBoxOutlined,
-  ReviewsOutlined
-} from "@mui/icons-material";
+import { Close, MenuRounded } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { theme } from "@/theme";
@@ -17,83 +12,147 @@ import {
   Button,
   Stack,
   Grid,
-  Avatar,
-  Typography
+  AppBar,
+  Container,
+  Toolbar,
+  Drawer,
+  Box,
+  ListItemButton,
+  ListItemText
 } from "@mui/material";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const MobileMenu: React.FC = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const [open, setOpen] = useState(false);
+  const snackbar = useContext(SnackbarContext);
+
+  const toggleDrawer = open => event => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setOpen(open);
+  };
 
   return (
-    <>
-      <Link href="/">
-        <Stack>
-          <IconButton>
-            <ReviewsOutlined />
+    <AppBar position="static" sx={{ background: "white", boxShadow: "none" }}>
+      <Container maxWidth="lg" disableGutters>
+        <Toolbar sx={{ padding: "0 !important" }}>
+          <Link href="/" style={{ flexGrow: 1 }}>
+            <Image
+              src="/logo.svg"
+              alt="Obudynku Logo"
+              height="46"
+              width="138"
+              onClick={() => router.push("/")}
+            />
+          </Link>
+
+          <IconButton
+            edge="start"
+            aria-label="open drawer"
+            onClick={toggleDrawer(true)}
+            sx={{
+              ml: 2,
+              color: "black"
+            }}
+          >
+            <MenuRounded />
           </IconButton>
-          <Typography variant="caption" fontWeight={600} color="#8083a3">
-            Opinie
-          </Typography>
-        </Stack>
-      </Link>
-      <Link href="/ranking">
-        <Stack alignItems="center">
-          <IconButton>
-            <ListAltOutlined />
-          </IconButton>
-          <Typography variant="caption" fontWeight={600} color="#8083a3">
-            Ranking
-          </Typography>
-        </Stack>
-      </Link>
-      {user && (
-        <Link href="/opinion/new">
-          <Stack alignItems="center">
-            <IconButton color="primary">
-              <AddBoxOutlined />
-            </IconButton>
-            <Typography variant="caption" fontWeight={600} color="#00D066">
-              Dodaj opinie
-            </Typography>
-          </Stack>
-        </Link>
-      )}
-      <Divider orientation="vertical" flexItem />
-      {user ? (
-        <Link href="/profile">
-          <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
-        </Link>
-      ) : (
-        <Stack spacing={2} direction="row">
-          <Button variant="text" onClick={() => router.push("/signin")}>
-            Logowanie
-          </Button>
-          <Button variant="contained" onClick={() => router.push("/signup")}>
-            Rejestracja
-          </Button>
-        </Stack>
-      )}
-    </>
+
+          <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+            <Box
+              sx={{
+                p: 2,
+                height: 1,
+                minWidth: 200,
+                backgroundColor: "#ffffff"
+              }}
+            >
+              <IconButton sx={{ mb: 2 }}>
+                <Close onClick={toggleDrawer(false)} />
+              </IconButton>
+
+              <Divider sx={{ mb: 2 }} />
+
+              <Box sx={{ mb: 2 }}>
+                <ListItemButton onClick={() => router.push("/")}>
+                  <ListItemText primary="Opinie" />
+                </ListItemButton>
+                <ListItemButton onClick={() => router.push("/ranking")}>
+                  <ListItemText primary="Ranking miast" />
+                </ListItemButton>
+                {user && (
+                  <ListItemButton onClick={() => router.push("/profile")}>
+                    <ListItemText primary="Profil" />
+                  </ListItemButton>
+                )}
+                <Box ml={1} mt={1} mb={1}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => router.push("/opinion/new")}
+                  >
+                    Dodaj opinie
+                  </Button>
+                </Box>
+                <Divider sx={{ mb: 2, mt: 2 }} />
+                <Box ml={1} mt={1} mb={1}>
+                  {user ? (
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => {
+                        router.replace("/");
+                        setUser(undefined);
+                        snackbar.showSnackbar({
+                          message: "Pomyślnie wylogowano",
+                          severity: "success"
+                        });
+                      }}
+                    >
+                      Wyloguj się
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={() => router.push("/signin")}
+                    >
+                      Logowanie
+                    </Button>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          </Drawer>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 
 export const Menu: React.FC = () => {
   const router = useRouter();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const snackbar = useContext(SnackbarContext);
 
   return (
     <Grid
       container
       className={styles.ob__menu}
-      justifyContent="space-around"
+      justifyContent="space-between"
       alignItems="center"
     >
-      {!isMobile && (
-        <Grid item xs>
+      {isMobile ? (
+        <MobileMenu />
+      ) : (
+        <>
           <Link href="/">
             <Image
               src="/logo.svg"
@@ -103,55 +162,64 @@ export const Menu: React.FC = () => {
               onClick={() => router.push("/")}
             />
           </Link>
-        </Grid>
-      )}
-      {isMobile ? (
-        <MobileMenu />
-      ) : (
-        <Grid item xs={8}>
-          <Stack
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-            justifyContent="flex-end"
-            alignItems="center"
-          >
-            <Stack spacing={2} direction="row">
-              <Link href="/">
-                <Button variant="text">Opinie</Button>
-              </Link>
-              <Button onClick={() => router.push("/ranking")} variant="text">
-                Ranking miast
-              </Button>
-              {user && (
+          <Grid xs={10}>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem />}
+              spacing={2}
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <Stack spacing={2} direction="row">
+                <Button onClick={() => router.push("/")} variant="text">
+                  Opinie
+                </Button>
+                <Button onClick={() => router.push("/ranking")} variant="text">
+                  Ranking miast
+                </Button>
+                {user && (
+                  <Button
+                    onClick={() => router.push("/profile")}
+                    variant="text"
+                  >
+                    Profil
+                  </Button>
+                )}
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   onClick={() => router.push("/opinion/new")}
                 >
                   Dodaj opinie
                 </Button>
-              )}
-            </Stack>
-            {user ? (
-              <Link href="/profile">
-                <Avatar>{user.email[0].toLocaleUpperCase()}</Avatar>
-              </Link>
-            ) : (
-              <Stack spacing={2} direction="row">
-                <Button variant="text" onClick={() => router.push("/signin")}>
-                  Logowanie
-                </Button>
+              </Stack>
+              {user ? (
                 <Button
                   variant="contained"
-                  startIcon={<PeopleOutlined />}
-                  onClick={() => router.push("/signup")}
+                  color="error"
+                  onClick={() => {
+                    router.replace("/");
+                    setUser(undefined);
+                    snackbar.showSnackbar({
+                      message: "Pomyślnie wylogowano",
+                      severity: "success"
+                    });
+                  }}
                 >
-                  Rejestracja
+                  Wyloguj się
                 </Button>
-              </Stack>
-            )}
-          </Stack>
-        </Grid>
+              ) : (
+                <Stack spacing={2} direction="row">
+                  <Button
+                    variant="contained"
+                    onClick={() => router.push("/signin")}
+                  >
+                    Logowanie
+                  </Button>
+                </Stack>
+              )}
+            </Stack>
+          </Grid>
+        </>
       )}
     </Grid>
   );

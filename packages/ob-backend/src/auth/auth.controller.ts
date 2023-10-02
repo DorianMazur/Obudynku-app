@@ -55,38 +55,6 @@ export class AuthController {
     return res;
   }
 
-  /*@UseGuards(AuthGuard('jwt-email'))
-  @UseGuards(RateLimiterGuard)
-  @RateLimit({
-    keyPrefix: 'register_phone',
-    points: 1,
-  })
-  @Post('register/phone')
-  async phone(@Body() data: GeneratePhoneCodeDTO) {
-    const res = await this.authService.generatePhoneCode(data.phone);
-    if (!res) {
-      throw new HttpException(
-        'Error during sending a sms',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-    return res;
-  }
-
-  @UseGuards(AuthGuard('jwt-email'))
-  @Post('register/phone/verify')
-  async phoneVerify(@Request() req, @Body() data: VerifyPhoneCodeDTO) {
-    const res = await this.authService.verifyPhoneCode(
-      data.code,
-      data.phone,
-      req.user.email,
-    );
-    if (!res || !res.token) {
-      throw new HttpException('Invalid code', HttpStatus.NOT_FOUND);
-    }
-    return res;
-  }*/
-
   @UseGuards(AuthGuard('jwt-email'))
   @Post('register/finish')
   async finishRegistration(

@@ -54,6 +54,7 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
         value={tab}
         onChange={(_, v) => setTab(v)}
         variant="scrollable"
+        sx={{ "& .MuiTabs-flexContainer": { justifyContent: "center" } }}
         scrollButtons
         allowScrollButtonsMobile
       >

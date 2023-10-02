@@ -87,7 +87,7 @@ export const SignupEmailForm: React.FC<SignupEmailFormProps> = ({
       </form>
       <Divider flexItem>lub</Divider>
       <Button
-        variant="text"
+        variant="outlined"
         size="large"
         fullWidth
         onClick={() => router.push("/signin")}
