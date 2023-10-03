@@ -6,7 +6,8 @@ import {
   TextField,
   Stack,
   Tabs,
-  Tab
+  Tab,
+  Box
 } from "@mui/material";
 import { useState } from "react";
 import { OpinionIndexes } from "@/types/Opinion";
@@ -50,51 +51,53 @@ export const NewOpinionRatesForm: React.FC<NewOpinionRatesFormProps> = ({
       >
         Opinie
       </Typography>
-      <Tabs
-        value={tab}
-        onChange={(_, v) => setTab(v)}
-        variant="scrollable"
-        sx={{ "& .MuiTabs-flexContainer": { justifyContent: "center" } }}
-        scrollButtons
-        allowScrollButtonsMobile
-      >
-        <Tab
-          label="Akustyka"
-          value="acustic"
-          icon={
-            opinions?.["acustic"]?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: "red !important;" }} />
-            )
-          }
-        />
-        <Tab
-          label="Lokalizacja"
-          value="localization"
-          icon={
-            opinions?.["localization"]?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: "red !important;" }} />
-            )
-          }
-        />
-        <Tab
-          label="Budownictwo"
-          value="construction"
-          icon={
-            opinions?.["construction"]?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: "red !important;" }} />
-            )
-          }
-        />
-        <Tab
-          label="Bezpieczeństwo"
-          value="safety"
-          icon={
-            opinions?.["safety"]?.desc ? undefined : (
-              <ErrorOutlined sx={{ color: "red !important;" }} />
-            )
-          }
-        />
-      </Tabs>
+      <Box display="flex" justifyContent="center" width="100%">
+        <Tabs
+          value={tab}
+          onChange={(_, v) => setTab(v)}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          centered
+        >
+          <Tab
+            label="Akustyka"
+            value="acustic"
+            icon={
+              opinions?.["acustic"]?.desc ? undefined : (
+                <ErrorOutlined sx={{ color: "red !important;" }} />
+              )
+            }
+          />
+          <Tab
+            label="Lokalizacja"
+            value="localization"
+            icon={
+              opinions?.["localization"]?.desc ? undefined : (
+                <ErrorOutlined sx={{ color: "red !important;" }} />
+              )
+            }
+          />
+          <Tab
+            label="Budownictwo"
+            value="construction"
+            icon={
+              opinions?.["construction"]?.desc ? undefined : (
+                <ErrorOutlined sx={{ color: "red !important;" }} />
+              )
+            }
+          />
+          <Tab
+            label="Bezpieczeństwo"
+            value="safety"
+            icon={
+              opinions?.["safety"]?.desc ? undefined : (
+                <ErrorOutlined sx={{ color: "red !important;" }} />
+              )
+            }
+          />
+        </Tabs>
+      </Box>
       <Stack spacing={2} alignItems="center" mt="16px">
         <Rating
           max={10}
